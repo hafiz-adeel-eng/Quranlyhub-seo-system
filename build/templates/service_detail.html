@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="/index.html">Home</a> {{ icon('chevron-right') }}
+      <a href="/services.html">Services</a> {{ icon('chevron-right') }}
+      <span>{{ service.title }}</span>
+    </div>
+    <h1>{{ service.title }} in Hobart</h1>
+    <p>{{ service.lead }}</p>
+    <div class="hero-cta" style="margin-top:26px;">
+      <a class="btn btn-primary" href="/contact.html">{{ icon('calendar') }} Book Online</a>
+      <a class="btn btn-outline-white" href="{{ biz.phone_href }}">{{ icon('phone') }} {{ biz.phone_display }}</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">What's Included</span>
+      <h2>Our {{ service.title }} Service Covers</h2>
+      <ul class="checklist">
+        {% for item in service.covers %}
+        <li>{{ icon('check') }} {{ item }}</li>
+        {% endfor %}
+      </ul>
+      <p style="margin-top:18px;">All work is carried out by qualified technicians with upfront pricing agreed before any repair begins, backed by our workmanship guarantee.</p>
+    </div>
+    <div class="split-media">{{ icon(service.icon) }}</div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Common Problems</span>
+      <h2>Signs You Need {{ service.title }}</h2>
+    </div>
+    <div class="grid grid-3">
+      {% for p in service.problems %}
+      <div class="service-card">
+        <span class="service-icon">{{ icon('wrench') }}</span>
+        <p>{{ p }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--navy">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2>Hobart's Straightforward Choice for Appliance Repair</h2>
+    </div>
+    <div class="feature-row">
+      {% for w in why_us[:4] %}
+      <div class="feature-item">
+        <span class="service-icon">{{ icon(w.icon) }}</span>
+        <div>
+          <h4>{{ w.title }}</h4>
+          <p>{{ w.text }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Explore More</span>
+      <h2>Other Services You Might Need</h2>
+    </div>
+    <div class="grid grid-4">
+      {% for s in related_services %}
+      <div class="service-card">
+        <span class="service-icon">{{ icon(s.icon) }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.short }}</p>
+        <a class="btn-link" href="/services/{{ s.slug }}.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    {% include 'partials/cta_banner.html' %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">Home</a> {{ icon('chevron-right') }} <span>Contact</span></div>
+    <h1>Book a Repair or Get In Touch</h1>
+    <p>Fill in the form below and we'll confirm your appointment, or call us directly to book over the phone.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split" style="align-items:flex-start;">
+    <div class="form-card">
+      <h3>Request a Free Quote</h3>
+      <p style="color:var(--color-text-light);font-size:14px;">* Required field. We'll respond within one business day.</p>
+      <form id="quoteForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">First Name *</label>
+            <input type="text" id="fname" name="fname" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name *</label>
+            <input type="text" id="lname" name="lname" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="suburb">Suburb *</label>
+            <input type="text" id="suburb" name="suburb" placeholder="e.g. Sandy Bay" required>
+          </div>
+          <div class="form-group">
+            <label for="service">Service Needed *</label>
+            <select id="service" name="service" required>
+              <option value="">Select a service</option>
+              {% for s in residential_services %}
+              <option value="{{ s.title }}">{{ s.title }}</option>
+              {% endfor %}
+              <option value="Commercial Appliance Repair">Commercial Appliance Repair</option>
+              <option value="Other">Other / Not Sure</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="message">Tell Us What's Happening</label>
+          <textarea id="message" name="message" rows="5" placeholder="e.g. Fridge isn't cooling and making a buzzing noise"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">{{ icon('calendar') }} Request My Quote</button>
+        <p id="formNote" style="display:none;margin-top:14px;color:var(--color-success);font-weight:600;font-size:14px;">{{ icon('check-circle') }} Thanks — your request has been noted. Our team will be in touch shortly.</p>
+      </form>
+    </div>
+
+    <div>
+      <div class="contact-info-card">
+        <h3>Contact Details</h3>
+        <div class="contact-info-row">
+          <span class="service-icon">{{ icon('phone') }}</span>
+          <div><b>Call Us</b><a href="{{ biz.phone_href }}">{{ biz.phone_display }} &middot; {{ biz.phone_local_display }}</a></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="service-icon">{{ icon('mail') }}</span>
+          <div><b>Email</b><a href="mailto:{{ biz.email }}">{{ biz.email }}</a></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="service-icon">{{ icon('map-pin') }}</span>
+          <div><b>Service Area</b><span>{{ biz.address_area }}</span></div>
+        </div>
+        <div class="contact-info-row">
+          <span class="service-icon">{{ icon('clock') }}</span>
+          <div><b>Hours</b><span>{{ biz.hours }}</span></div>
+        </div>
+      </div>
+      <div class="split-media" style="margin-top:24px;min-height:220px;">
+        {{ icon('map-pin') }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

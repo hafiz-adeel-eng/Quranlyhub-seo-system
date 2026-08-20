@@ -1,0 +1,11 @@
+{% from 'partials/icons.html' import icon %}
+<div class="cta-banner">
+  <div>
+    <h3>{{ heading|default('Ready to Get Your Appliance Fixed?') }}</h3>
+    <p>{{ text|default('Book online in under 2 minutes or give our Hobart team a call today.') }}</p>
+  </div>
+  <div class="cta-actions">
+    <a class="btn btn-navy" href="/contact.html">{{ icon('calendar') }} Book Online</a>
+    <a class="btn btn-outline-white" href="{{ biz.phone_href }}">{{ icon('phone') }} {{ biz.phone_display }}</a>
+  </div>
+</div>

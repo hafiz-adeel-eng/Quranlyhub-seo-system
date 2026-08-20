@@ -1,0 +1,62 @@
+{% from 'partials/icons.html' import icon %}
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="/index.html" class="brand">
+          <span class="brand-mark">{{ icon('wrench') }}</span>
+          <span class="brand-text">
+            <span>{{ biz.name }}</span>
+            <span class="brand-sub">Hobart, TAS</span>
+          </span>
+        </a>
+        <p>{{ biz.tagline }}. Local, qualified technicians repairing all major appliance brands across Hobart and the greater Hobart region.</p>
+        <div class="footer-socials">
+          <a href="{{ biz.socials.facebook }}" aria-label="Facebook">{{ icon('facebook') }}</a>
+          <a href="{{ biz.socials.instagram }}" aria-label="Instagram">{{ icon('instagram') }}</a>
+          <a href="{{ biz.socials.google }}" aria-label="Google">{{ icon('google') }}</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h5>Residential Services</h5>
+        <ul>
+          {% for i, label, href in nav_residential %}
+          <li><a href="{{ href }}">{{ label }}</a></li>
+          {% endfor %}
+          <li><a href="/services.html">View All Services</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="/about.html">About Us</a></li>
+          <li><a href="/services.html#commercial">Business / Commercial</a></li>
+          <li><a href="/service-areas.html">Service Areas</a></li>
+          <li><a href="/faq.html">FAQs</a></li>
+          <li><a href="/contact.html">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <h5>Get In Touch</h5>
+        <ul>
+          <li>{{ icon('phone') }} <a href="{{ biz.phone_href }}">{{ biz.phone_display }} &middot; {{ biz.phone_local_display }}</a></li>
+          <li>{{ icon('mail') }} <a href="mailto:{{ biz.email }}">{{ biz.email }}</a></li>
+          <li>{{ icon('map-pin') }} <span>{{ biz.address_area }}</span></li>
+          <li>{{ icon('clock') }} <span>{{ biz.hours }}</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; {{ biz.year }} {{ biz.name }}. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="/terms.html">Terms of Use</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</footer>

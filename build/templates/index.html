@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div>
+      <span class="hero-badge">{{ icon('map-pin') }} Hobart &amp; Greater Hobart, Tasmania</span>
+      <h1>Fast, Reliable <em>Appliance Repairs</em> for Hobart Homes &amp; Businesses</h1>
+      <p class="lead">From a fridge that won't cool to a dryer that won't heat, our local Hobart technicians repair all major appliance brands — with upfront pricing and a workmanship guarantee.</p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="/contact.html">{{ icon('calendar') }} Book Online — Under 2 Minutes</a>
+        <a class="btn btn-outline-white" href="{{ biz.phone_href }}">{{ icon('phone') }} Call {{ biz.phone_display }}</a>
+      </div>
+      <div class="hero-trust">
+        <div class="stat"><b>15+</b><span>Appliance Services Offered</span></div>
+        <div class="stat"><b>24-48h</b><span>Scheduled Response</span></div>
+        <div class="stat"><b>100%</b><span>Upfront Pricing</span></div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <span class="hero-card-badge">Same-Week Bookings</span>
+      <h3>We Repair &amp; Service</h3>
+      <p>All major residential and commercial appliance brands.</p>
+      <ul>
+        <li>{{ icon('fridge') }} Refrigerators &amp; Freezers</li>
+        <li>{{ icon('washer') }} Washing Machines</li>
+        <li>{{ icon('dryer') }} Clothes Dryers</li>
+        <li>{{ icon('oven') }} Ovens, Stoves &amp; Ranges</li>
+        <li>{{ icon('dishwasher') }} Dishwashers</li>
+        <li>{{ icon('grill') }} Outdoor Kitchens &amp; BBQs</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="container">
+    <span class="trust-item">{{ icon('shield') }} Workmanship Guarantee</span>
+    <span class="trust-item">{{ icon('award') }} Qualified Technicians</span>
+    <span class="trust-item">{{ icon('tag') }} Upfront Pricing</span>
+    <span class="trust-item">{{ icon('calendar') }} Scheduled Appointments</span>
+    <span class="trust-item">{{ icon('map-pin') }} Locally Based in Hobart</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What We Repair</span>
+      <h2>We Service All Major Appliance Brands</h2>
+      <p>Finding a reliable local appliance repair team you can trust is easy with {{ biz.name }}. Our technicians are trained and equipped to repair every major brand — explore our most requested services below.</p>
+    </div>
+    <div class="grid grid-4">
+      {% for slug in featured_slugs %}
+      {% set s = all_services[slug] %}
+      <div class="service-card">
+        <span class="service-icon">{{ icon(s.icon) }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.short }}</p>
+        <a class="btn-link" href="/services/{{ s.slug }}.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center" style="margin-top:36px;">
+      <a class="btn btn-outline" href="/services.html">{{ icon('arrow-right') }} View All 15+ Services</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--navy">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2>Hobart's Straightforward Choice for Appliance Repair</h2>
+      <p>No confusing quotes, no all-day wait windows — just honest, qualified repairs from a team that's local to Hobart.</p>
+    </div>
+    <div class="feature-row">
+      {% for w in why_us %}
+      <div class="feature-item">
+        <span class="service-icon">{{ icon(w.icon) }}</span>
+        <div>
+          <h4>{{ w.title }}</h4>
+          <p>{{ w.text }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">How It Works</span>
+      <h2>Booking a Repair Is Simple</h2>
+      <p>From your first call to a completed repair, here's what to expect when you book with {{ biz.name }}.</p>
+    </div>
+    <div class="steps">
+      {% for step in process_steps %}
+      <div class="step">
+        <span class="step-num">{{ loop.index }}</span>
+        <h4>{{ step.title }}</h4>
+        <p>{{ step.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h3>New Customer Offer: $20 Off Any Repair</h3>
+        <p>Mention this offer when you book online or call. Excludes diagnostic fee. Terms apply, valid for new customers only.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-navy" href="/contact.html">{{ icon('badge-percent') }} Claim Offer</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Customer Reviews</span>
+      <h2>Trusted by Homes &amp; Businesses Across Hobart</h2>
+      <p>Real feedback from customers across the greater Hobart region.</p>
+    </div>
+    <div class="testimonial-track">
+      {% for t in testimonials[:3] %}
+      <div class="testimonial-card">
+        <div class="stars">{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}{{ icon('star') }}</div>
+        <p>&ldquo;{{ t.text }}&rdquo;</p>
+        <div class="testimonial-person">
+          <span class="testimonial-avatar">{{ t.initials }}</span>
+          <div>
+            <b>{{ t.name }}</b>
+            <span>{{ t.area }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--navy">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Where We Work</span>
+      <h2>Proudly Servicing Hobart &amp; Surrounding Suburbs</h2>
+      <p>Wherever you are in the greater Hobart region, our technicians can come to you.</p>
+    </div>
+    <div class="area-pill-grid">
+      {% for area in service_areas[:14] %}
+      <span class="area-pill">{{ icon('map-pin') }} {{ area }}</span>
+      {% endfor %}
+    </div>
+    <div class="text-center" style="margin-top:30px;">
+      <a class="btn btn-primary" href="/service-areas.html">{{ icon('arrow-right') }} See Full Service Area List</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Frequently Asked Questions</h2>
+      <p>Answers to the questions we hear most from Hobart homeowners and businesses.</p>
+    </div>
+    <div class="accordion" data-accordion>
+      {% for f in faqs[:5] %}
+      <div class="accordion-item{% if loop.first %} open{% endif %}">
+        <button class="accordion-trigger" type="button">
+          <span>{{ f.q }}</span>
+          {{ icon('plus') }}
+        </button>
+        <div class="accordion-panel">
+          <div class="accordion-panel-inner"><p>{{ f.a }}</p></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="text-center" style="margin-top:30px;">
+      <a class="btn btn-outline" href="/faq.html">{{ icon('arrow-right') }} View All FAQs</a>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    {% include 'partials/cta_banner.html' %}
+  </div>
+</section>
+
+{% endblock %}

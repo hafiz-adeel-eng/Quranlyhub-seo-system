@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+<meta name="author" content="{{ biz.name }}">
+<link rel="canonical" href="https://appliancerepairstasmania.com.au{{ path }}">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:url" content="https://appliancerepairstasmania.com.au{{ path }}">
+<meta property="og:site_name" content="{{ biz.name }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ title }}">
+<meta name="twitter:description" content="{{ description }}">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/style.css">
+
+{% if schema %}
+<script type="application/ld+json">{{ schema|safe }}</script>
+{% endif %}
+</head>
+<body>
+
+{% include 'partials/header.html' %}
+
+{% block content %}{% endblock %}
+
+{% include 'partials/footer.html' %}
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

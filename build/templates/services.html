@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">Home</a> {{ icon('chevron-right') }} <span>Services</span></div>
+    <h1>Appliance Repair Services in Hobart</h1>
+    <p>{{ biz.name }} repairs all major appliance brands for homes and businesses across Hobart. Browse the full list below, or get in touch if you don't see what you're after.</p>
+  </div>
+</section>
+
+<section class="section" id="residential">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Residential</span>
+      <h2>Appliance Repair for Your Home</h2>
+      <p>All services performed by qualified technicians, with upfront pricing and a workmanship guarantee.</p>
+    </div>
+    <div class="grid grid-3">
+      {% for s in residential_services %}
+      <div class="service-card">
+        <span class="service-icon">{{ icon(s.icon) }}</span>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.short }}</p>
+        <a class="btn-link" href="/services/{{ s.slug }}.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--navy" id="commercial">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Business / Commercial</span>
+      <h2>Commercial Appliance Repair</h2>
+      <p>Keeping cafes, restaurants, accommodation and retail businesses across Hobart trading without unplanned downtime.</p>
+    </div>
+    <div class="grid grid-3">
+      <div class="service-card">
+        <span class="service-icon">{{ icon('fridge') }}</span>
+        <h3>Commercial Fridge &amp; Freezer Repair</h3>
+        <p>Walk-ins, display fridges and freezers kept at safe, consistent temperatures.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('dishwasher') }}</span>
+        <h3>Commercial Dishwasher Repair</h3>
+        <p>Fast turnaround on commercial dish and glass washers to keep service moving.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('washer') }}</span>
+        <h3>Commercial Laundry Repair</h3>
+        <p>Commercial washing machines and gas/electric dryers for accommodation and laundromats.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('ice-cube') }}</span>
+        <h3>Commercial Ice Machine Repair</h3>
+        <p>Keep bar and kitchen ice production reliable, especially through peak trade.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('oven') }}</span>
+        <h3>Commercial Oven &amp; Cooking Equipment</h3>
+        <p>Commercial ovens, cooktops and cooking equipment repaired by trained technicians.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('building') }}</span>
+        <h3>Maintenance Contracts</h3>
+        <p>Scheduled preventative maintenance to reduce breakdowns and unplanned closures.</p>
+        <a class="btn-link" href="/services/commercial-appliance-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="more">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Additional Services</span>
+      <h2>More Ways We Help</h2>
+    </div>
+    <div class="grid grid-3">
+      <div class="service-card">
+        <span class="service-icon">{{ icon('leaf') }}</span>
+        <h3>Dryer Vent Cleaning</h3>
+        <p>Reduce fire risk and drying time with a full clear-out of your dryer vent line.</p>
+        <a class="btn-link" href="/services/dryer-vent-cleaning.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('sparkles') }}</span>
+        <h3>Appliance Wellness Program</h3>
+        <p>An annual check-up across your major appliances to catch small issues early.</p>
+        <a class="btn-link" href="/services/appliance-wellness-program.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('grill') }}</span>
+        <h3>Outdoor Kitchen &amp; BBQ Repair</h3>
+        <p>Built-in grills, side burners, outdoor fridges, dishwashers and ice makers.</p>
+        <a class="btn-link" href="/services/outdoor-kitchen-bbq-repair.html">Learn More {{ icon('arrow-right') }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    {% include 'partials/cta_banner.html' %}
+  </div>
+</section>
+
+{% endblock %}

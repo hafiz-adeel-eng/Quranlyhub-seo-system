@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">Home</a> {{ icon('chevron-right') }} <span>Service Areas</span></div>
+    <h1>Appliance Repair Across Hobart &amp; Greater Hobart</h1>
+    <p>Our technicians are based in Hobart and travel across the greater Hobart region every day. Can't see your suburb listed? Get in touch — we're often able to help anyway.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Suburbs We Cover</span>
+      <h2>Our Hobart Service Area</h2>
+      <p>From the CBD out to Kingston, Glenorchy and beyond, we bring the workshop to you.</p>
+    </div>
+    <div class="area-pill-grid">
+      {% for area in service_areas %}
+      <span class="area-pill">{{ icon('map-pin') }} {{ area }}, TAS</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="grid grid-3">
+      <div class="service-card">
+        <span class="service-icon">{{ icon('map-pin') }}</span>
+        <h3>Inner Hobart</h3>
+        <p>Hobart CBD, Battery Point, Sandy Bay, North Hobart, West Hobart, South Hobart, New Town.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('map-pin') }}</span>
+        <h3>Northern Suburbs</h3>
+        <p>Glenorchy, Moonah, Berriedale, Claremont, Austins Ferry, Bridgewater, Lenah Valley.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('map-pin') }}</span>
+        <h3>Eastern Shore &amp; South</h3>
+        <p>Bellerive, Rosny Park, Howrah, Lindisfarne, Rose Bay, Kingston, Blackmans Bay, Taroona, Cambridge, Sorell.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    {% include 'partials/cta_banner.html' %}
+  </div>
+</section>
+
+{% endblock %}

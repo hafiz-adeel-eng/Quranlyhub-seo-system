@@ -1,0 +1,91 @@
+{% from 'partials/icons.html' import icon %}
+<div class="topbar">
+  <div class="container">
+    <div class="topbar-left">
+      <span class="topbar-item">{{ icon('map-pin') }} {{ biz.address_area }}</span>
+      <span class="topbar-item">{{ icon('clock') }} {{ biz.hours }}</span>
+      <a class="topbar-item" href="mailto:{{ biz.email }}">{{ icon('mail') }} {{ biz.email }}</a>
+    </div>
+    <div class="topbar-socials">
+      <a href="{{ biz.socials.facebook }}" aria-label="Facebook">{{ icon('facebook') }}</a>
+      <a href="{{ biz.socials.instagram }}" aria-label="Instagram">{{ icon('instagram') }}</a>
+      <a href="{{ biz.socials.google }}" aria-label="Google">{{ icon('google') }}</a>
+    </div>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="container nav">
+    <a href="/index.html" class="brand">
+      <span class="brand-mark">{{ icon('wrench') }}</span>
+      <span class="brand-text">
+        <span>{{ biz.name }}</span>
+        <span class="brand-sub">Hobart, TAS</span>
+      </span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav-menu">
+        <li><a class="nav-link" href="/index.html">Home</a></li>
+        <li class="has-dropdown">
+          <a class="nav-link" href="/services.html">Services {{ icon('chevron-down') }}</a>
+          <div class="dropdown mega">
+            <div class="dropdown-col">
+              <h5>Residential</h5>
+              {% for i, label, href in nav_residential %}
+              <a class="dropdown-link" href="{{ href }}">{{ icon(i) }} {{ label }}</a>
+              {% endfor %}
+            </div>
+            <div class="dropdown-col">
+              <h5>Commercial &amp; More</h5>
+              {% for i, label, href in nav_commercial %}
+              <a class="dropdown-link" href="{{ href }}">{{ icon(i) }} {{ label }}</a>
+              {% endfor %}
+              <div class="dropdown-foot">
+                <a class="dropdown-link" href="/services.html"><strong>{{ icon('arrow-right') }} View All Services</strong></a>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li><a class="nav-link" href="/service-areas.html">Service Areas</a></li>
+        <li><a class="nav-link" href="/about.html">About Us</a></li>
+        <li><a class="nav-link" href="/faq.html">FAQ</a></li>
+        <li><a class="nav-link" href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="nav-call" href="{{ biz.phone_href }}">
+        <span class="brand-mark">{{ icon('phone') }}</span>
+        <span>
+          <small>Call us now</small>
+          {{ biz.phone_display }}
+        </span>
+      </a>
+      <a class="btn btn-primary" href="/contact.html">{{ icon('calendar') }} Book Online</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="/index.html">Home</a></li>
+      <li><a href="/services.html">All Services</a></li>
+      {% for i, label, href in nav_residential %}
+      <li><a href="{{ href }}">{{ label }}</a></li>
+      {% endfor %}
+      {% for i, label, href in nav_commercial %}
+      <li><a href="{{ href }}">{{ label }}</a></li>
+      {% endfor %}
+      <li><a href="/service-areas.html">Service Areas</a></li>
+      <li><a href="/about.html">About Us</a></li>
+      <li><a href="/faq.html">FAQ</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <a class="btn btn-primary btn-block" href="/contact.html">{{ icon('calendar') }} Book Online</a>
+  </div>
+</header>
+
+<a class="mobile-call-bar" href="{{ biz.phone_href }}">{{ icon('phone') }} Call {{ biz.phone_display }}</a>

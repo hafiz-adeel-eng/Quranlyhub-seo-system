@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% from 'partials/icons.html' import icon %}
+{% block content %}
+
+<section class="page-hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="/index.html">Home</a> {{ icon('chevron-right') }} <span>About Us</span></div>
+    <h1>Hobart's Local Appliance Repair Team</h1>
+    <p>{{ biz.name }} was built around one idea: fast, honest appliance repair from people who actually live and work in Hobart.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container split">
+    <div>
+      <span class="eyebrow">Our Story</span>
+      <h2>Local Technicians, No Call Centres</h2>
+      <p>We started {{ biz.name }} because too many Hobart households were stuck waiting days for a call back from national booking lines that had never set foot in Tasmania. We wanted appliance repair to feel local again — a real technician, a real appointment time, and a straight answer about what's wrong and what it costs to fix.</p>
+      <p>Today our team repairs everything from a single-fridge household in Sandy Bay to full commercial kitchens in the Hobart CBD, carrying the parts and tools to get most jobs done in one visit.</p>
+      <ul class="checklist">
+        <li>{{ icon('check') }} Based in Hobart, servicing the greater Hobart region</li>
+        <li>{{ icon('check') }} Trained technicians across all major appliance brands</li>
+        <li>{{ icon('check') }} Transparent, upfront pricing before any work starts</li>
+        <li>{{ icon('check') }} Workmanship guarantee on every repair</li>
+      </ul>
+    </div>
+    <div class="split-media">{{ icon('wrench') }}</div>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Our Values</span>
+      <h2>What Guides Every Job We Do</h2>
+      <p>The same principles apply whether it's a $40 part swap or a full commercial refrigeration repair.</p>
+    </div>
+    <div class="grid grid-4">
+      <div class="service-card">
+        <span class="service-icon">{{ icon('shield') }}</span>
+        <h3>Honesty</h3>
+        <p>You get a straight answer on what's wrong, what it costs, and whether repair or replacement makes more sense.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('award') }}</span>
+        <h3>Quality</h3>
+        <p>Every repair is completed to a standard we'd be happy to have in our own homes.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('users') }}</span>
+        <h3>Respect</h3>
+        <p>For your time, your home and your business — we turn up when we say we will.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">{{ icon('thumbs-up') }}</span>
+        <h3>Reliability</h3>
+        <p>We're local and staying local — you can count on us being here next time too.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--navy">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2>Straightforward Appliance Repair, Done Right</h2>
+    </div>
+    <div class="feature-row">
+      {% for w in why_us %}
+      <div class="feature-item">
+        <span class="service-icon">{{ icon(w.icon) }}</span>
+        <div>
+          <h4>{{ w.title }}</h4>
+          <p>{{ w.text }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-banner">
+      <div>
+        <h3>Have an Appliance Acting Up?</h3>
+        <p>Book online or call our Hobart team — most jobs are quoted and fixed in a single visit.</p>
+      </div>
+      <div class="cta-actions">
+        <a class="btn btn-navy" href="/contact.html">{{ icon('calendar') }} Book Online</a>
+        <a class="btn btn-outline-white" href="{{ biz.phone_href }}">{{ icon('phone') }} {{ biz.phone_display }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
