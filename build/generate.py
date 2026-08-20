@@ -27,6 +27,8 @@ env = Environment(
 
 BASE_CONTEXT = {
     "biz": d.BUSINESS,
+    "hero_image": d.HERO_IMAGE,
+    "about_image": d.ABOUT_IMAGE,
     "nav_residential": d.NAV_RESIDENTIAL,
     "nav_commercial": d.NAV_COMMERCIAL,
     "nav_main": d.NAV_MAIN,

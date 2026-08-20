@@ -30,7 +30,10 @@
       </ul>
       <p style="margin-top:18px;">All work is carried out by qualified technicians with upfront pricing agreed before any repair begins, backed by our workmanship guarantee.</p>
     </div>
-    <div class="split-media">{{ icon(service.icon) }}</div>
+    <div class="split-media split-media--photo">
+      <img src="{{ service.image.url }}" alt="{{ service.image.alt }}" loading="lazy" width="1200" height="800">
+      <span class="split-media-badge">{{ icon(service.icon) }}</span>
+    </div>
   </div>
 </section>
 

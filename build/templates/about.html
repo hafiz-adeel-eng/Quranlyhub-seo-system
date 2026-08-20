@@ -24,7 +24,10 @@
         <li>{{ icon('check') }} Workmanship guarantee on every repair</li>
       </ul>
     </div>
-    <div class="split-media">{{ icon('wrench') }}</div>
+    <div class="split-media split-media--photo">
+      <img src="{{ about_image.url }}" alt="{{ about_image.alt }}" loading="lazy" width="1000" height="1250">
+      <span class="split-media-badge">{{ icon('wrench') }}</span>
+    </div>
   </div>
 </section>
 

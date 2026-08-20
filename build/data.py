@@ -3,6 +3,29 @@
 Edit this file, then run `python3 build/generate.py` to rebuild the HTML.
 """
 
+
+def pexels(photo_id, w=1200):
+    """Build a Pexels CDN URL from a photo id (Pexels' standard hotlink
+    pattern — free to use, no attribution required, per the Pexels License).
+    """
+    return (
+        f"https://images.pexels.com/photos/{photo_id}/pexels-photo-{photo_id}.jpeg"
+        f"?auto=compress&cs=tinysrgb&w={w}"
+    )
+
+
+# Real, free-to-use stock photos (Pexels License — no attribution required).
+# Swap any photo_id below for a different one if you'd prefer another shot;
+# the id is the number at the end of the photo's pexels.com/photo/... URL.
+HERO_IMAGE = {
+    "url": pexels(33671149, w=1000),
+    "alt": "Appliance repair technician working in a workshop",
+}
+ABOUT_IMAGE = {
+    "url": pexels(31718639, w=1000),
+    "alt": "Technician repairing a home appliance",
+}
+
 BUSINESS = {
     "name": "Appliance Repairs Tasmania",
     "short_name": "Appliance Repairs TAS",
@@ -182,6 +205,7 @@ SERVICE_DETAILS = [
         "slug": "refrigerator-repair",
         "icon": "fridge",
         "title": "Refrigerator Repair",
+        "image": {"url": pexels(2343467), "alt": "Stainless steel refrigerator in a modern kitchen"},
         "meta": "Local fridge repair in Hobart for all major brands. Fast diagnosis, upfront pricing, same-week appointments.",
         "lead": "Your fridge runs 24/7 — when it stops cooling properly, food safety and your grocery budget are on the line. Our technicians diagnose the problem fast and carry common parts to fix most fridges in a single visit.",
         "covers": [
@@ -202,6 +226,7 @@ SERVICE_DETAILS = [
         "slug": "washing-machine-repair",
         "icon": "washer",
         "title": "Washing Machine Repair",
+        "image": {"url": pexels(8774444), "alt": "Front-loading washing machine with clothes inside"},
         "meta": "Front and top loader washing machine repairs in Hobart. Stop leaks fast and avoid costly water damage.",
         "lead": "A leaking or unbalanced washing machine can cause real damage to your laundry floor in a hurry. We repair every major brand and load type, and we prioritise leak calls to protect your home.",
         "covers": [
@@ -222,6 +247,7 @@ SERVICE_DETAILS = [
         "slug": "dryer-repair",
         "icon": "dryer",
         "title": "Clothes Dryer Repair",
+        "image": {"url": pexels(28479466), "alt": "Modern laundry room with washer and dryer"},
         "meta": "Electric and gas dryer repair in Hobart. Fix heating faults, long dry times and drum problems.",
         "lead": "A dryer that won't heat, takes multiple cycles to dry a load, or squeals on every spin is working harder than it should — and running up your power bill. We service electric and gas dryers of every brand.",
         "covers": [
@@ -242,6 +268,7 @@ SERVICE_DETAILS = [
         "slug": "oven-stove-range-repair",
         "icon": "oven",
         "title": "Oven, Stove & Range Repair",
+        "image": {"url": pexels(10827395), "alt": "Stainless steel gas stove and oven in a modern kitchen"},
         "meta": "Gas and electric oven, cooktop and range repairs in Hobart, done safely by trained technicians.",
         "lead": "Whether it's an electric wall oven, gas cooktop, or a freestanding range, an appliance that won't heat evenly (or won't heat at all) throws off every meal. We repair gas and electric cooking appliances to manufacturer safety standards.",
         "covers": [
@@ -262,6 +289,7 @@ SERVICE_DETAILS = [
         "slug": "dishwasher-repair",
         "icon": "dishwasher",
         "title": "Dishwasher Repair",
+        "image": {"url": pexels(213162), "alt": "Close-up of a stainless steel dishwasher"},
         "meta": "Dishwasher repair in Hobart for leaks, poor cleaning and drainage faults, all major brands.",
         "lead": "Dishes coming out dirty, water pooling at the bottom, or a dishwasher that won't drain are the most common calls we get — and most are fixed in a single visit with the right part on the van.",
         "covers": [
@@ -282,6 +310,7 @@ SERVICE_DETAILS = [
         "slug": "outdoor-kitchen-bbq-repair",
         "icon": "grill",
         "title": "Outdoor Kitchen & BBQ Repair",
+        "image": {"url": pexels(17830999), "alt": "Man grilling on an outdoor barbecue"},
         "meta": "Outdoor kitchen and built-in BBQ repair in Hobart — grills, side burners, outdoor fridges and more.",
         "lead": "Your outdoor kitchen should mean more time entertaining and less time troubleshooting. We service built-in grills, side burners, outdoor fridges, dishwashers and ice makers so your outdoor space stays ready for guests.",
         "covers": [
@@ -302,6 +331,7 @@ SERVICE_DETAILS = [
         "slug": "commercial-appliance-repair",
         "icon": "building",
         "title": "Commercial Appliance Repair",
+        "image": {"url": pexels(21661595), "alt": "Chefs working in a commercial restaurant kitchen"},
         "meta": "Commercial kitchen and laundry appliance repair across Hobart. Minimise downtime for cafes, restaurants and businesses.",
         "lead": "Downtime costs you trade. We repair commercial refrigeration, cooking and laundry equipment for cafes, restaurants, aged care, accommodation and retail businesses across Hobart, with priority booking for business customers.",
         "covers": [
@@ -322,6 +352,7 @@ SERVICE_DETAILS = [
         "slug": "dryer-vent-cleaning",
         "icon": "leaf",
         "title": "Dryer Vent Cleaning",
+        "image": {"url": pexels(7614539), "alt": "Washing machine and dryer built into a cabinet"},
         "meta": "Professional dryer vent cleaning in Hobart to cut fire risk and reduce drying times.",
         "lead": "A blocked dryer vent is one of the most common (and most preventable) causes of house fires. It also makes your dryer work harder, take longer, and cost more to run. A full vent clean fixes both problems at once.",
         "covers": [
@@ -341,6 +372,7 @@ SERVICE_DETAILS = [
         "slug": "appliance-wellness-program",
         "icon": "sparkles",
         "title": "Appliance Wellness Program",
+        "image": {"url": pexels(6510427), "alt": "Modern kitchen with minimalist appliances"},
         "meta": "Annual appliance check-up in Hobart. Catch small faults early and extend the life of your appliances.",
         "lead": "Most appliance failures don't happen overnight — they build up over months. Our Appliance Wellness Program is a scheduled annual check-up across your major appliances, designed to catch wear and tear before it becomes a breakdown.",
         "covers": [
