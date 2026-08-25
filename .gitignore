@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Secrets - NEVER commit these
+.env
+credentials/
+*.json
+!requirements*.json
+
+# Output reports
+outputs/
