@@ -12,6 +12,10 @@ export function generateStaticParams() {
   return CITY_SLUGS.map((city) => ({ city }));
 }
 
+// A newly created profile must appear on its city page immediately, so these
+// pages are rendered fresh on every request rather than cached as static HTML.
+export const dynamic = "force-dynamic";
+
 export function generateMetadata({ params }: { params: { city: string } }): Metadata {
   const city = getCityBySlug(params.city);
   if (!city) return {};

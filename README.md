@@ -108,18 +108,56 @@ controls the price.
   from that city — this is the core "network effect" loop the whole city-
   first design is built around.
 
-## Moving to production
+## Deploying to Vercel
 
-1. **Database**: change `provider = "sqlite"` to `"postgresql"` in
-   `prisma/schema.prisma`, point `DATABASE_URL` at a real Postgres instance
-   (Supabase, Neon, RDS, etc.), then `npx prisma db push` (or set up
-   migrations with `npx prisma migrate dev`).
-2. **Auth secret**: set a real `NEXTAUTH_SECRET` (`openssl rand -base64 32`)
-   and `NEXTAUTH_URL` to your production domain.
-3. **Payments**: wire up JazzCash/Easypaisa or Stripe as described above.
-4. **Photos**: `Profile.photoUrl` exists in the schema but the upload flow
+This repo has no Vercel project connected yet and no deploy credentials are
+configured in this environment, so deployment has to be kicked off from your
+own Vercel account (2FA-protected accounts can't be automated from here
+anyway). It's a five-minute, click-through process:
+
+1. **Database first** — Vercel's serverless functions run on an ephemeral,
+   effectively read-only filesystem, so the SQLite file used in local dev
+   cannot work there. Get a free Postgres database before deploying:
+   - Easiest: inside the Vercel project (step 2) open the **Storage** tab →
+     **Create Database** → **Neon (Postgres)** → Connect. Vercel injects the
+     connection string as an env var automatically.
+   - Or create one directly at [neon.tech](https://neon.tech) (free tier) and
+     copy its connection string.
+2. **Import the project**: on [vercel.com](https://vercel.com), **Add New →
+   Project → Import Git Repository**, choose
+   `hafiz-adeel-eng/Quranlyhub-seo-system`, and set the branch to
+   `claude/pakistan-rishta-platform-7cycmv` (Project Settings → Git →
+   Production Branch, if you want it on your main `.vercel.app` domain).
+3. **Environment variables** (Project Settings → Environment Variables):
+   | Key | Value |
+   |---|---|
+   | `DATABASE_URL` | the Postgres connection string from step 1 |
+   | `NEXTAUTH_SECRET` | a random secret — generate with `openssl rand -base64 32` |
+   | `NEXTAUTH_URL` | your Vercel URL, e.g. `https://your-project.vercel.app` |
+   | `NEXT_PUBLIC_SITE_URL` | same as `NEXTAUTH_URL` |
+   | `ADMIN_EMAILS` | your email — the only account allowed to open `/admin/unlocks` |
+   | `MANUAL_PAYMENT_NUMBER` | your JazzCash/Easypaisa number for receiving payments |
+   | `MANUAL_PAYMENT_NAME` | the name shown alongside that number |
+4. **Deploy**. Vercel runs `npm run build`, which runs `prisma generate`
+   automatically (see `package.json`'s `build` script).
+5. **Create the schema and seed data** — from anywhere with the
+   `DATABASE_URL` from step 1:
+   ```bash
+   DATABASE_URL="<paste-it>" npx prisma db push
+   DATABASE_URL="<paste-it>" npm run db:seed
+   ```
+   (If you'd rather not run this yourself, share the connection string and
+   this can be done for you.)
+
+After that, the `.vercel.app` URL is a fully working, publicly reachable copy
+of the site — real signups, real profiles, real per-city pages.
+
+## Beyond the first deploy
+
+1. **Payments**: wire up JazzCash/Easypaisa or Stripe as described above.
+2. **Photos**: `Profile.photoUrl` exists in the schema but the upload flow
    isn't built yet — plug in any object storage (S3, Cloudflare R2,
    Uploadthing) and add an upload step to the profile form.
-5. **Moderation**: `Profile.isVerified` and `isPublished` flags exist for a
+3. **Moderation**: `Profile.isVerified` and `isPublished` flags exist for a
    future admin review queue (block spam/fake profiles before they go live
    on a city page) — currently every profile publishes immediately.
