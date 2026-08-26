@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap");
+
+html[lang="ur"] body {
+  font-family: "Noto Nastaliq Urdu", "Inter", system-ui, sans-serif;
+}
+
+html[lang="en"] body {
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  @apply bg-brand-50/40 text-gray-900;
+}
+
+.blur-contact {
+  filter: blur(5px);
+  user-select: none;
+}

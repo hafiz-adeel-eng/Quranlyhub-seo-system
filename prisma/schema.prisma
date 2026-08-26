@@ -1,0 +1,96 @@
+// Rishta Pakistan — matrimonial platform schema
+// Dev uses SQLite; switch `provider` to "postgresql" and DATABASE_URL for production.
+// NOTE: SQLite has no native enum support, so Gender/MaritalStatus/Sect/UnlockStatus
+// are plain Strings here — the allowed values are defined once in src/lib/enums.ts
+// and validated in application code. Switching to postgresql later can reintroduce
+// real Prisma enums if desired.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  phone         String?
+  passwordHash  String
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  profile       Profile?
+  unlocksBought ContactUnlock[] @relation("BuyerUnlocks")
+}
+
+model City {
+  id        String    @id @default(cuid())
+  slug      String    @unique // e.g. "gujranwala"
+  nameUr    String    // e.g. "گوجرانوالہ"
+  nameEn    String    // e.g. "Gujranwala"
+  province  String?
+  isFeatured Boolean  @default(true)
+
+  profiles  Profile[]
+}
+
+model Profile {
+  id             String        @id @default(cuid())
+  user           User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String        @unique
+
+  fullName       String
+  gender           String // "MALE" | "FEMALE"
+  lookingForGender String // "MALE" | "FEMALE"
+  age            Int
+  height         String?
+  maritalStatus  String        @default("SINGLE") // SINGLE | DIVORCED | WIDOWED | KHULA
+  sect           String        @default("OTHER")  // SUNNI | SHIA | AHLE_HADITH | DEOBANDI | BARELVI | OTHER
+  caste          String?
+  education      String?
+  profession     String?
+  income         String?
+
+  city           City          @relation(fields: [cityId], references: [id])
+  cityId         String
+
+  bioUr          String?
+  bioEn          String?
+
+  contactPhone   String
+  contactWhatsapp String?
+
+  photoUrl       String?
+  isPublished    Boolean       @default(true)
+  isVerified     Boolean       @default(false)
+
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  unlocks        ContactUnlock[] @relation("ProfileUnlocks")
+
+  @@index([cityId, gender, isPublished])
+}
+
+model ContactUnlock {
+  id            String        @id @default(cuid())
+  buyer         User          @relation("BuyerUnlocks", fields: [buyerId], references: [id], onDelete: Cascade)
+  buyerId       String
+  profile       Profile       @relation("ProfileUnlocks", fields: [profileId], references: [id], onDelete: Cascade)
+  profileId     String
+
+  amountPkr     Int
+  status        String        @default("PENDING") // PENDING | PAID | FAILED
+  provider      String        @default("manual") // manual | jazzcash | easypaisa | stripe
+  providerRef   String?       // transaction id / reference number from gateway or user-submitted receipt
+
+  createdAt     DateTime      @default(now())
+  paidAt        DateTime?
+
+  @@unique([buyerId, profileId])
+  @@index([status])
+}
