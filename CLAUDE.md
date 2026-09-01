@@ -102,14 +102,45 @@ sacrifice readability for SEO.
   serviced vary by appliance page (Samsung, LG, Bosch, Fisher & Paykel,
   Miele, Westinghouse, Electrolux, Smeg, AEG, and others — check the
   specific service page's brand chips before citing one for that
-  appliance). Never invent a price, a review count, a technician headcount,
-  or a certification not already stated on the site.
-- **Existing pages** (check before proposing a new one): Home, Fridge
-  Repair Hobart, Washing Machine Repair Hobart, Oven Repairs Hobart,
+  appliance). The business now has its own dedicated local team in each of
+  Launceston, Devonport, Burnie and Ulverstone (confirmed directly by the
+  owner 2026-08-31) — city landing pages should say "our local
+  [City] team", not frame technicians as travelling out from Hobart. Never
+  invent a price, a review count, a technician headcount, or a
+  certification not already stated on the site.
+- **Existing pages** (check before proposing a new one): Home (Hobart),
+  Fridge Repair Hobart, Washing Machine Repair Hobart, Oven Repairs Hobart,
   Dishwasher Repair Hobart, Dryer Repair Hobart, Vacuum Repairs Hobart,
-  Contact Us, Book Online, Blog index — plus blog posts covering (per
-  appliance) not-cooling/not-heating/not-spinning/leaking/making-noise/
-  not-draining/losing-suction/not-drying, and one cross-cutting
-  "Appliance Repair Cost in Hobart" guide that links every service page.
-  Pull the live list with `rank-math/get-seo-scores` before planning new
-  topics — it changes as new articles get published.
+  Contact Us, Book Online, Blog index, plus dedicated city landing pages —
+  Appliance Repair Launceston, Appliance Repair Devonport, Appliance Repair
+  Burnie, Appliance Repair Ulverstone (each with its own unique intro/copy,
+  not cloned Hobart text — cross-linked to each other and to Hobart) —
+  plus blog posts covering (per appliance)
+  not-cooling/not-heating/not-spinning/leaking/making-noise/not-draining/
+  not-defrosting/losing-suction/not-drying/won't-start/stopping-mid-cycle/
+  shutting-off, one cross-cutting "Appliance Repair Cost in Hobart" guide
+  that links every service page, and an "Appliance Rental vs Repair"
+  guide. Pull the live list with `rank-math/get-seo-scores` before
+  planning new topics — it changes as new articles get published.
+- **Caching — 3 layers, all must be cleared after any content edit**:
+  (1) LiteSpeed Cache (server page cache) and Hostinger's edge CDN (`hcdn`)
+  — both cleared together by
+  `wp_get_ability('hostinger-ai-assistant/litespeed-cache-flush')->execute([])`
+  (plain `do_action('litespeed_purge_all')` does NOT reach the hcdn edge).
+  (2) A persistent external object cache is active
+  (`wp_using_ext_object_cache()` returns true) — `update_post_meta()` on
+  `_elementor_data` can still be served stale to live requests until you
+  also call `wp_cache_flush()`. (3) Elementor caches its own rendered
+  output per-page in postmeta key `_elementor_element_cache` (separate
+  from `_elementor_data` and from `_elementor_css`) — a direct
+  `update_post_meta(..., '_elementor_data', ...)` edit does NOT invalidate
+  it, so the page can keep rendering the pre-edit version indefinitely
+  until that key is cleared: `delete_post_meta($post_id,
+  '_elementor_element_cache')`.
+  **After any `_elementor_data` edit, always run all three**: delete
+  `_elementor_element_cache` for every edited post → `wp_cache_flush()` →
+  the `litespeed-cache-flush` ability. Then verify with a fresh
+  `wp_remote_get()` on the live URL and confirm the actual new text/markup
+  is present in the body — a `MISS` cache header alone is not proof; it
+  only shows *a* cache layer was bypassed, not that the rendered content
+  is current.
