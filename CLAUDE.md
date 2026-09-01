@@ -144,3 +144,21 @@ sacrifice readability for SEO.
   is present in the body — a `MISS` cache header alone is not proof; it
   only shows *a* cache layer was bypassed, not that the rendered content
   is current.
+- **LiteSpeed "Guest Mode" breaks inline `<script>` click handlers unless
+  excluded**: `optm-guest_only`/`guest_optm` are both `1` on this site,
+  which forces `LITESPEED_GUEST_OPTM` and hard-codes JS Delay to max for
+  every anonymous visitor — this **overrides** the `optm-js_defer`,
+  `optm-js_defer_exc` and `optm-js_delay_inc` settings entirely (checked
+  `wp-content/plugins/litespeed-cache/src/optimize.cls.php`), rewriting
+  any inline `<script>` to `type="litespeed/javascript"` so it only runs
+  after LiteSpeed's own delayed-JS loader activates on a later user
+  interaction. On a *fresh page load* this can eat the very first click
+  (e.g. the mobile hamburger button not opening the menu on the first
+  tap). The only reliable per-script bypass is the `data-no-defer="1"`
+  attribute (`data-no-optimize="1"` is a *different* attribute — it
+  exempts a script from Combine/Minify only, not from Delay). Any inline
+  `<script>` powering a critical, must-work-on-first-interaction control
+  (nav toggles, the booking wizard, etc.) needs
+  `<script data-no-optimize="1" data-no-defer="1">` — verify by fetching
+  the live URL and confirming the script tag has **no**
+  `type="litespeed/javascript"` wrapper.
