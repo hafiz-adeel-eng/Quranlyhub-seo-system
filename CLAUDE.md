@@ -178,6 +178,26 @@ sacrifice readability for SEO.
   (`quranlyhub`) — author archives are fully disabled site-wide
   (`titles.disable_author_archives = true`) since a single-author archive
   is pure duplicate content of the blog index.
+  **Content conventions on this site** (confirmed 2026-09-07, plain
+  `post_type = post` with raw HTML in `post_content`, no Elementor for
+  blog articles): Article/BlogPosting schema is automatic (Rank Math's
+  `pt_post_default_rich_snippet = article` outputs a `@graph` with
+  WebSite/BreadcrumbList/WebPage/Person/BlogPosting in `<head>` on every
+  post — never hand-code this). **FAQPage schema is NOT automatic** —
+  write a real, visible "Frequently Asked Questions" H2 section (H3
+  question + `<p>` answer, matching every question to an actual heading in
+  the article) and append a matching
+  `<script type="application/ld+json">{"@type":"FAQPage",...}</script>`
+  block directly in `post_content`, verified to render live. `rank_math_focus_keyword`
+  on this site holds a comma-separated primary+secondary keyword list (not
+  a single strict-match keyword like Hobart). **Always resolve internal
+  link URLs with `get_permalink($id)`** before writing an anchor — this
+  site's slugs are frequently much shorter than the post title would
+  suggest (e.g. post 634 "Online Quran Classes for Teenagers: What
+  Actually Works at This Age" → `/online-quran-classes-for-teenagers/`),
+  so a guessed slug reliably 404s. Categories in use: Learn Quran, Tajweed,
+  Noorani Qaida, Hifz & Memorization, Quranic Arabic, Female Teachers,
+  Quran Learning Tips, Tafseer, Parenting & Family (added 2026-09-07).
 - **LiteSpeed "Guest Mode" breaks inline `<script>` click handlers unless
   excluded**: `optm-guest_only`/`guest_optm` are both `1` on this site,
   which forces `LITESPEED_GUEST_OPTM` and hard-codes JS Delay to max for
