@@ -144,6 +144,40 @@ sacrifice readability for SEO.
   is present in the body — a `MISS` cache header alone is not proof; it
   only shows *a* cache layer was bypassed, not that the rendered content
   is current.
+  **A 4th layer specifically for XML sitemaps**: Rank Math caches its own
+  generated sitemap output (as a physical file under
+  `wp-content/uploads/rank-math/`, or a `_transient_sitemap_*` transient if
+  the filesystem isn't writable) for up to 100 days, independent of
+  everything above — the cache filename doesn't contain the word "sitemap"
+  so a naive file search for it will miss it. Editing categories, terms,
+  or Rank Math sitemap settings does NOT auto-invalidate this. After any
+  such change, always call `\RankMath\Sitemap\Cache::invalidate_storage()`
+  directly, then re-verify with a fresh `wp_remote_get()` on the actual
+  `*-sitemap.xml` URL (not just the DB option value).
+- **`hostinger-ai-assistant` plugin is not always active** — it was active
+  on quranlyhub.com (so
+  `wp_get_ability('hostinger-ai-assistant/litespeed-cache-flush')` works
+  there) but got deactivated at some point on hobartappliancecare.com. Check
+  `get_option('active_plugins')` first; when the ability isn't registered,
+  fall back to `\LiteSpeed\Purge::purge_all()` directly (same effect, no
+  ability wrapper needed) plus `wp_cache_flush()`.
+- **Rank Math boolean options are strictly typed** — some settings (e.g.
+  `titles.disable_author_archives`) are checked with `=== true` in Rank
+  Math's own code, not a truthy check. Writing the string `'1'` or `'on'`
+  silently does nothing (`'1' === true` is `false` in PHP). Set the real
+  PHP boolean `true`/`false` for these; array-based settings still use
+  `'on'`/`'off'` strings as normal (e.g. `sitemap.authors_sitemap`). When
+  a setting change doesn't seem to take effect after a full cache purge,
+  check the plugin's own source for the exact comparison it does before
+  assuming it's a caching issue.
+- **quranlyhub.com** (separate site, `novamira-quranlyhub-com` MCP
+  connector): an online Quran-learning academy (Tafseer, Tajweed, Hifz,
+  Quranic Arabic, Noorani Qaida, Alim/Aalimah courses) targeting Qatar,
+  Canada, Saudi Arabia, UAE, USA, UK and Australia via `/locations/{country}/`
+  pages. Also on Rank Math + LiteSpeed Cache. Single WP user
+  (`quranlyhub`) — author archives are fully disabled site-wide
+  (`titles.disable_author_archives = true`) since a single-author archive
+  is pure duplicate content of the blog index.
 - **LiteSpeed "Guest Mode" breaks inline `<script>` click handlers unless
   excluded**: `optm-guest_only`/`guest_optm` are both `1` on this site,
   which forces `LITESPEED_GUEST_OPTM` and hard-codes JS Delay to max for
