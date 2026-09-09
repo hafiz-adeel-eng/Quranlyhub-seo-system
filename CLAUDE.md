@@ -216,3 +216,87 @@ sacrifice readability for SEO.
   `<script data-no-optimize="1" data-no-defer="1">` — verify by fetching
   the live URL and confirming the script tag has **no**
   `type="litespeed/javascript"` wrapper.
+
+## Content backups — `backups/` directory
+
+Full exports of both sites' published posts/pages (post_content,
+`_elementor_data`, and Rank Math meta) are periodically saved to
+`backups/<site>_<date>.json` and committed to this repo — a real,
+independent recovery point in case a live site's database is ever lost or
+corrupted, separate from WordPress's own revision history. `.gitignore`
+blanket-excludes `*.json` (for credential files) with an explicit
+`!backups/*.json` exception so these are never accidentally skipped.
+
+To take a fresh backup for a site, run via that site's `novamira/execute-php`:
+```php
+$posts = get_posts(['post_type'=>['post','page'],'post_status'=>'publish','numberposts'=>-1]);
+$export = [];
+foreach ($posts as $p) {
+  $ed = get_post_meta($p->ID, '_elementor_data', true);
+  $export[] = ['ID'=>$p->ID,'post_title'=>$p->post_title,'post_name'=>$p->post_name,
+    'post_type'=>$p->post_type,'post_status'=>$p->post_status,'post_date'=>$p->post_date,
+    'post_modified'=>$p->post_modified,'post_content'=>$p->post_content,
+    'elementor_data'=>is_string($ed)?$ed:null,
+    'elementor_edit_mode'=>get_post_meta($p->ID,'_elementor_edit_mode',true),
+    'rank_math_title'=>get_post_meta($p->ID,'rank_math_title',true),
+    'rank_math_description'=>get_post_meta($p->ID,'rank_math_description',true),
+    'rank_math_focus_keyword'=>get_post_meta($p->ID,'rank_math_focus_keyword',true)];
+}
+$json = wp_json_encode(['site'=>'<domain>','exported_at'=>current_time('mysql'),
+  'post_count'=>count($export),'posts'=>$export], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+file_put_contents('/tmp/backup.json', $json);
+```
+Then, since this session's sandbox cannot directly fetch the site's own
+URLs (an org network policy blocks outbound browsing to arbitrary
+domains), retrieve the data through the MCP tool's own text channel
+instead of HTTP: `echo file_get_contents('/tmp/backup.json');` — for
+anything past a few hundred KB this exceeds the tool's inline output
+limit and gets auto-saved to a local `tool-results/*.txt` file (as
+`{success, data: {output: "..."}}`); extract the real payload with
+`jq -r '.data.output' <that file> > backups/<site>_<date>.json`, then
+delete the `/tmp/backup.json` on the WordPress server. Never write the
+export to `wp-content/uploads/` and fetch it over HTTPS — that path is
+blocked by this session's network policy and briefly exposes full site
+content at a guessable public URL.
+
+## Elementor editing gotchas (found the hard way, twice)
+
+- **Never edit `_elementor_data` or `post_content` via `wp_update_post()` or
+  `update_post_meta()`.** Both run the value through `wp_unslash()`
+  internally, which strips backslashes needed for valid JSON escaping
+  (e.g. `\"` inside a widget's HTML setting, or `\/` in URLs) — silently
+  corrupting the JSON into something `json_decode()` can no longer parse.
+  This has broken a live homepage and several service pages this way.
+  **Always write directly via `$wpdb->update($wpdb->postmeta, ['meta_value'=>$json], ['post_id'=>$id,'meta_key'=>'_elementor_data'])`**
+  (or `$wpdb->update($wpdb->posts, ['post_content'=>$html], ['ID'=>$id])`
+  for blog posts), after confirming `json_decode($json) !== null` on the
+  string you're about to write. Encode with
+  `wp_json_encode($data, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)` to
+  avoid needing escaped slashes in the first place.
+- **After any such direct write, verify against the DB, not `get_post_meta()`.**
+  Both sites run a persistent external object cache (LiteSpeed's own
+  drop-in) that `$wpdb->update()` does not invalidate, so `get_post_meta()`
+  can keep returning the pre-write value in the same or a later request.
+  Re-read with `$wpdb->get_var("SELECT meta_value FROM {$wpdb->postmeta}
+  WHERE post_id=%d AND meta_key='_elementor_data'")` to see the true
+  current row, and call `wp_cache_flush()` (plus `clean_post_cache($id)`)
+  before trusting any `get_post_*()` read again.
+- **If `_elementor_data` ever comes back corrupted**, don't hand-repair the
+  JSON — WordPress keeps full post revisions, and Elementor copies
+  `_elementor_data` into each revision too. Find the last revision where
+  `json_decode()` succeeds (`wp_get_post_revisions($id)`, newest first) and
+  restore that value wholesale via the same direct `$wpdb->update()`.
+- **A container's "classic" background color can silently depend on JS.**
+  If Elementor emits the background-color rule scoped to
+  `.elementor-element-XXXXX > .elementor-motion-effects-container > .elementor-motion-effects-layer`
+  instead of directly on `.elementor-element-XXXXX`, the color only
+  appears after Elementor's own motion-effects script runs client-side —
+  which LiteSpeed's Guest-Mode JS delay (see above) can postpone past
+  first paint, leaving the section looking unstyled/transparent. Check a
+  page's generated CSS file
+  (`wp-content/uploads/elementor/css/post-<id>.css`) for this pattern; the
+  safe fix (Elementor free has no per-element Custom CSS) is a small
+  `!important` override added via `wp_get_custom_css_post()` /
+  `wp_update_custom_css_post()` (WordPress's native Additional CSS),
+  targeting the specific `.elementor-element-<id>` selector directly —
+  never edit the theme's own core CSS files to work around this.
