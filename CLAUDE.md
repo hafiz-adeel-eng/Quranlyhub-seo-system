@@ -1,17 +1,24 @@
 # Hobart Appliance Care — SEO & Content
 
 This repo is the SEO toolkit for **hobartappliancecare.com**, a local appliance
-repair business in Hobart, Tasmania, Australia (fridges/refrigerators, washing
-machines, dryers, ovens, dishwashers, vacuum cleaners). Most day-to-day work
-happens directly on the live WordPress site via the `novamira-hobartappliancec`
-MCP connector, not in this repo's Python code (that's a separate GA4/GSC
-reporting toolkit — see README.md).
+repair business in **Hobart, Indiana, USA** (Lake County, ZIP 46342 —
+fridges/refrigerators, washing machines, dryers, ovens, dishwashers, vacuum
+cleaners). Most day-to-day work happens directly on the live WordPress site
+via the `novamira-hobartappliancec` MCP connector, not in this repo's Python
+code (that's a separate GA4/GSC reporting toolkit — see README.md).
+
+**Relocation note (2026-09-16)**: the business was previously positioned as
+Hobart, Tasmania, Australia and was fully relocated site-wide to Hobart,
+Indiana, USA in this session. All Australia/Tasmania references, AU-only
+brands, and the old satellite-city structure (Launceston/Devonport/Burnie/
+Ulverstone) were replaced. See "Established true claims" and "Existing
+pages" below for the current facts — do not resurrect the old AU identity.
 
 ## Content-writing SOP — always follow this for any new article or page
 
 Role to hold: a senior Local SEO strategist and expert appliance-repair
-content planner, writing for real Hobart homeowners — not an SEO writer, not
-an AI.
+content planner, writing for real Hobart, Indiana homeowners — not an SEO
+writer, not an AI.
 
 **Before writing anything new:**
 
@@ -33,7 +40,7 @@ an AI.
 6. Transactional intent first (service pages), supported by informational
    content (blog posts) that link back to the matching service page.
 7. Cover appliances/problems/entities/local context naturally. Never keyword
-   stuff, never force "Hobart"/"Tasmania" repeatedly.
+   stuff, never force "Hobart"/"Indiana" repeatedly.
 8. Write for humans first; structure for both classic Google results and
    AI/answer-engine surfaces — a direct "Quick answer" up top, clear
    H2/H3s, an FAQ block.
@@ -57,7 +64,7 @@ writing direction.
 generic AI filler · duplicate an existing topic without a real intent
 difference · create doorway/location-spam pages (a city landing page needs
 an actual service partner there first, not just a page) · invent local
-facts or business claims · overuse "Hobart"/"Tasmania" unnaturally ·
+facts or business claims · overuse "Hobart"/"Indiana" unnaturally ·
 sacrifice readability for SEO.
 
 ## Site technical facts (reuse these — don't re-derive each session)
@@ -97,31 +104,54 @@ sacrifice readability for SEO.
   pattern used to fix missing image alt text and enrich intro paragraphs).
 - **Established true claims** (safe to reuse verbatim, never invent new
   ones beyond these): upfront flat-rate pricing / no hidden fees, 12-month
-  parts & labour guarantee, flexible local scheduling, phone
-  `(03) 6200 1234`, email `bookings@hobartappliancecare.com`, brands
-  serviced vary by appliance page (Samsung, LG, Bosch, Fisher & Paykel,
-  Miele, Westinghouse, Electrolux, Smeg, AEG, and others — check the
-  specific service page's brand chips before citing one for that
-  appliance). The business now has its own dedicated local team in each of
-  Launceston, Devonport, Burnie and Ulverstone (confirmed directly by the
-  owner 2026-08-31) — city landing pages should say "our local
-  [City] team", not frame technicians as travelling out from Hobart. Never
-  invent a price, a review count, a technician headcount, or a
-  certification not already stated on the site.
-- **Existing pages** (check before proposing a new one): Home (Hobart),
+  parts & labour guarantee, flexible local scheduling, **no phone number
+  shown sitewide — contact is email-only**: `bookings@hobartappliancecare.com`
+  (per owner instruction; do not add a phone number anywhere), brands
+  serviced vary by appliance page (Samsung, LG, Bosch, GE, Miele, Frigidaire,
+  Electrolux, Whirlpool, Maytag, KitchenAid, ASKO, Hisense, Sub-Zero, Viking,
+  and others — check the specific service page's brand chips/dropdown before
+  citing one for that appliance; do not reuse the old AU brands Fisher &
+  Paykel/Smeg/Westinghouse/Haier/AEG/Simpson/Belling/Beko/Harvey
+  Norman-etc. retailers). The business has its own dedicated local team in
+  each of Portage, Merrillville, Valparaiso and Crown Point, Indiana — city
+  landing pages should say "our local [City] team", not frame technicians as
+  travelling out from Hobart. Address used in schema/footer: Hobart, IN
+  46342, United States. Legal pages (Privacy Policy, Terms of Service) use
+  generic "applicable law" / "applicable privacy law" phrasing rather than
+  naming a specific regulator or statute (no OAIC, no "Australian Consumer
+  Law" — Terms' governing-law clause says "the State of Indiana, United
+  States"), per owner instruction. Never invent a price, a review count, a
+  technician headcount, or a certification not already stated on the site.
+- **Real Hobart, IN / Northwest Indiana geography established this
+  session** (WebSearch-verified — reuse these, don't re-derive): Hobart, IN
+  neighborhoods/areas — Downtown Hobart (Lake George), Ainsworth, Deep River
+  Estates, Crestwood, Lakeview Drive, Hidden Lake, Villa Shores. Nearby
+  satellite cities (the current "city landing page" set, replacing the old
+  Tasmania cities) — Portage (Porter County; areas: Willow Creek,
+  Chesterton, Burns Harbor, Porter), Merrillville (Lake County; areas: West
+  Merrillville, Lottaville, Central Merrillville), Valparaiso (Porter County
+  seat; areas: Downtown Valparaiso, Chesterton, Hebron, Kouts), Crown Point
+  (Lake County seat; areas: Whispering Pines, Cedar Lake Estates, Prairie
+  Crossing, Meadowbrook). Do not invent additional Indiana place names
+  beyond this list without a fresh WebSearch.
+- **Existing pages** (check before proposing a new one): Home (Hobart, IN),
   Fridge Repair Hobart, Washing Machine Repair Hobart, Oven Repairs Hobart,
   Dishwasher Repair Hobart, Dryer Repair Hobart, Vacuum Repairs Hobart,
   Contact Us, Book Online, Blog index, plus dedicated city landing pages —
-  Appliance Repair Launceston, Appliance Repair Devonport, Appliance Repair
-  Burnie, Appliance Repair Ulverstone (each with its own unique intro/copy,
-  not cloned Hobart text — cross-linked to each other and to Hobart) —
-  plus blog posts covering (per appliance)
+  Appliance Repair Portage, Appliance Repair Merrillville, Appliance Repair
+  Valparaiso, Appliance Repair Crown Point (each with its own unique
+  intro/copy, not cloned Hobart text — cross-linked to each other and to
+  Hobart; these replaced the old Launceston/Devonport/Burnie/Ulverstone
+  Tasmania pages, which now 301-redirect to their new-city equivalents via
+  `rank_math_redirections`) — plus blog posts covering (per appliance)
   not-cooling/not-heating/not-spinning/leaking/making-noise/not-draining/
   not-defrosting/losing-suction/not-drying/won't-start/stopping-mid-cycle/
   shutting-off, one cross-cutting "Appliance Repair Cost in Hobart" guide
-  that links every service page, and an "Appliance Rental vs Repair"
-  guide. Pull the live list with `rank-math/get-seo-scores` before
-  planning new topics — it changes as new articles get published.
+  that links every service page, an "Appliance Rental vs Repair" guide, and
+  a "GE Fridge Repair in Hobart" brand post (`ge-fridge-repair-hobart`,
+  replacing the old Fisher & Paykel post, which now redirects to it). Pull
+  the live list with `rank-math/get-seo-scores` before planning new
+  topics — it changes as new articles get published.
 - **Caching — 3 layers, all must be cleared after any content edit**:
   (1) LiteSpeed Cache (server page cache) and Hostinger's edge CDN (`hcdn`)
   — both cleared together by
@@ -286,6 +316,47 @@ content at a guessable public URL.
   `_elementor_data` into each revision too. Find the last revision where
   `json_decode()` succeeds (`wp_get_post_revisions($id)`, newest first) and
   restore that value wholesale via the same direct `$wpdb->update()`.
+- **A sitewide find-and-replace on a topic (e.g. a business relocation)
+  must check far more than `post_content`.** During the 2026-09-16 AU→US
+  relocation, location/brand text kept turning up in places a simple
+  per-post content scan misses: (1) the global site tagline
+  (`get_option('blogdescription')`, rendered in the header/footer on every
+  page); (2) hardcoded strings in template files under
+  `wp-content/novamira-sandbox/*.php` (`hac-blog.php`'s footer address,
+  `hac-service-page-schema.php`'s `hac_service_local_business()` NAP
+  block — a *second*, PHP-generated LocalBusiness/Service JSON-LD entirely
+  separate from any hand-authored schema in `_elementor_data`); (3)
+  raw-HTML Elementor widgets holding brand "chip" grids
+  (`<span>Brand</span>` pill lists), suburb/neighborhood chip grids,
+  customer-testimonial attributions ("— Name, Suburb"), and a second,
+  hand-authored LocalBusiness JSON-LD block with its own `areaServed` array
+  of place names — all embedded as plain text inside a widget's `editor`/
+  `text` setting in `_elementor_data`, not as structured Elementor fields,
+  so they don't show up when only grepping for known brand/city terms in
+  the obvious spots; (4) a **Fluent Forms** form definition (table
+  `wp_fluentform_forms`, column `form_fields`, a large JSON blob) — the
+  booking form's brand dropdown, retailer dropdown, and suburb/postcode
+  field labels/placeholders live here, completely separate from both
+  `_elementor_data` and `post_content`, and only discoverable by searching
+  `wp_options`/`wp_postmeta`/plugin tables for the leaking term once you
+  notice it live. **When relocating/renaming anything sitewide**: after
+  fixing the obvious content, do a raw-SQL sweep of `wp_posts.post_content`
+  AND `wp_postmeta.meta_value` (all keys, not just `_elementor_data`) AND
+  `wp_options.option_value` AND any plugin-specific tables (`SHOW TABLES
+  LIKE '%formplugin%'`) for the old terms, then re-verify every hit with a
+  fresh `wp_remote_get()` on the live URL — don't assume "I already fixed
+  this page" from an earlier pass covers every widget on it.
+- **Bulk/looped DB-read verification scripts (one query per post, dozens of
+  posts in a single `execute-php` call) intermittently returned stale
+  results in this session** — showing pre-edit content on pages already
+  confirmed fixed by both an isolated single-post query *and* a live
+  `wp_remote_get()` moments earlier, even with `SELECT SQL_NO_CACHE` and
+  with MySQL's query cache confirmed OFF (single DB host, no replica, not
+  read-only). Root cause unconfirmed. **Treat a live `wp_remote_get()` on
+  the actual URL (with a cache-busting query param) as the ground truth**
+  for "is this actually fixed" — if a broad multi-post loop scan disagrees
+  with a fresh live fetch, trust the live fetch and re-run the loop scan
+  once more before assuming a real regression.
 - **A container's "classic" background color can silently depend on JS.**
   If Elementor emits the background-color rule scoped to
   `.elementor-element-XXXXX > .elementor-motion-effects-container > .elementor-motion-effects-layer`
