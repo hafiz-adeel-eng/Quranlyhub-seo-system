@@ -61,6 +61,11 @@
   }
   .hide-text .text-layer { display: none; }
   .hide-bg .bg-layer { display: none; }
+  /* Over stock footage: translucent shade keeps the text readable, pattern is dropped */
+  .over-video .bg {
+    background: radial-gradient(ellipse at 50% 50%, rgba(4, 24, 22, .55) 0%, rgba(3, 16, 15, .72) 60%, rgba(2, 10, 9, .9) 100%);
+  }
+  .over-video .bg svg { display: none; }
 </style>
 </head>
 <body>
