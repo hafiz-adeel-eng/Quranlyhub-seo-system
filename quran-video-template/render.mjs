@@ -29,7 +29,7 @@ await setClasses("hide-bg");
 const clips = [];
 for (const a of ayat) {
   await page.evaluate(({ a, cfg }) => window.setAyah({
-    ...a, reference: `${cfg.surah} · ${cfg.surahNumber}:${a.number}`, logo: cfg.logo,
+    ...a, reference: `القرآن - سورۃ نمبر ${cfg.surahNumber} ${cfg.surahUrdu} · آیت نمبر ${a.number}`, logo: cfg.logo,
   }), { a, cfg });
   await page.evaluate(() => document.fonts.ready);
   const text = `out/frames/ayah-${a.number}.png`;
@@ -47,7 +47,7 @@ for (const a of ayat) {
   const bgFilter = a.background
     ? `[0:v]fps=30,scale=1920:1080:force_original_aspect_ratio=increase,crop=1920:1080,setsar=1,` +
       `fade=in:st=0:d=0.5,fade=out:st=${Math.max(0, len - 0.5).toFixed(2)}:d=0.5[raw];[raw][1:v]overlay=format=auto[bg];`
-    : `[0:v]scale=2112:1188,zoompan=z='1+0.00025*on':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg];`;
+    : `[0:v]scale=2112:1188,zoompan=z='min(1+0.0002*on,1.08)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=1:s=1920x1080:fps=30[bg];`;
   execFileSync("ffmpeg", ["-y", "-loglevel", "error",
     ...bgInputs,
     "-loop", "1", "-framerate", "30", "-i", text,

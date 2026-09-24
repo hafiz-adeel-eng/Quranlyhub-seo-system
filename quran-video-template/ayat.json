@@ -6,11 +6,132 @@
   "ayat": [
     {
       "number": 15,
-      "start": 0.0,
-      "end": 29.6,
+      "start": 0,
+      "end": 17,
       "arabic": "فَاَمَّا الۡاِنۡسَانُ اِذَا مَا ابۡتَلٰٮهُ رَبُّهٗ فَاَكۡرَمَهٗ وَنَعَّمَهٗ ۙ فَيَقُوۡلُ رَبِّىۡۤ اَكۡرَمَنِؕ",
       "english": "And as for man, when his Lord tries him and [thus] is generous to him and favors him, he says, \"My Lord has honored me.\"",
       "urdu": "لیکن انسان کا حال یہ ہے کہ جب اس کا خداوند اس کا امتحان کرتا اور اس کو عزت و نعمت بخشتا ہے تو وہ خیال کرتا ہے کہ میرے رب نے میری شان بڑھائی ہے"
+    },
+    {
+      "number": 16,
+      "start": 17,
+      "end": 34,
+      "arabic": "وَاَمَّاۤ اِذَا مَا ابۡتَلٰٮهُ فَقَدَرَ عَلَيۡهِ رِزۡقَهٗ فَيَقُوۡلُ رَبِّىۡۤ اَهَانَنِ‌ۚ",
+      "english": "But when He tries him and restricts his provision, he says, \"My Lord has humiliated me.\"",
+      "urdu": "اور جب اس کو جانچتا اور رزق میں کمی کرتا ہے تو کہتا ہے کہ میرے خداوند نے مجھے ذلیل کر ڈالا۔"
+    },
+    {
+      "number": 17,
+      "start": 34,
+      "end": 41,
+      "arabic": "كَلَّا‌ بَلۡ لَّا تُكۡرِمُوۡنَ الۡيَتِيۡمَۙ",
+      "english": "No! But you do not honor the orphan",
+      "urdu": "ہر گز نہیں، بلکہ تم یتیموں کی قدر نہیں کرتے"
+    },
+    {
+      "number": 18,
+      "start": 41,
+      "end": 49,
+      "arabic": "وَلَا تَحٰٓضُّوۡنَ عَلٰى طَعَامِ الۡمِسۡكِيۡنِۙ",
+      "english": "And you do not encourage one another to feed the poor.",
+      "urdu": "اور نہ مسکینوں کو کھلانے پر ایک دوسرے کو ابھارتے"
+    },
+    {
+      "number": 19,
+      "start": 49,
+      "end": 56,
+      "arabic": "وَتَاۡكُلُوۡنَ التُّرَاثَ اَكۡلًا لَّـمًّا ۙ",
+      "english": "And you consume inheritance, devouring [it] altogether,",
+      "urdu": "اور وراثت کو سمیٹ کر ہڑپ کرتے ہو۔"
+    },
+    {
+      "number": 20,
+      "start": 56,
+      "end": 63,
+      "arabic": "وَّتُحِبُّوۡنَ الۡمَالَ حُبًّا جَمًّا ؕ",
+      "english": "And you love wealth with immense love.",
+      "urdu": "اور مال کے عشق میں متوالے ہو۔"
+    },
+    {
+      "number": 21,
+      "start": 63,
+      "end": 72,
+      "arabic": "كَلَّاۤ اِذَا دُكَّتِ الۡاَرۡضُ دَكًّا دَكًّا",
+      "english": "No! When the earth has been leveled — pounded and crushed —",
+      "urdu": "ہر گز نہیں، اس وقت کو یاد رکھیں جب زمین کوٹ کوٹ کر برابر کردی جائے گی"
+    },
+    {
+      "number": 22,
+      "start": 72,
+      "end": 80,
+      "arabic": "وَّجَآءَ رَبُّكَ وَالۡمَلَكُ صَفًّا صَفًّا",
+      "english": "And your Lord has come and the angels, rank upon rank,",
+      "urdu": "اور تیرا خداوند صف در صف فرشتوں کے جلو میں نمودار ہو گا"
+    },
+    {
+      "number": 23,
+      "start": 80,
+      "end": 103,
+      "arabic": "وَجِاىْٓءَ يَوۡمَئِذٍۢ بِجَهَنَّمَ ۙ‌ يَوۡمَئِذٍ يَّتَذَكَّرُ الۡاِنۡسَانُ وَاَنّٰى لَـهُ الذِّكۡرٰىؕ",
+      "english": "And brought [within view], that Day, is Hell — that Day, man will remember, but what good to him will be the remembrance?",
+      "urdu": "اور جہنم حاضر کی جائے گی۔ اس دن انسان سوچے گا مگر کیا حاصل اس سوچنے کا !"
+    },
+    {
+      "number": 24,
+      "start": 103,
+      "end": 109,
+      "arabic": "يَقُوۡلُ يٰلَيۡتَنِىۡ قَدَّمۡتُ لِحَـيَاتِى‌ۚ",
+      "english": "He will say, \"Oh, I wish I had sent ahead [some good] for my life.\"",
+      "urdu": "کہے گا، کاش میں نے اپنی زندگی کے لیے کچھ رکھا ہوتا ،"
+    },
+    {
+      "number": 25,
+      "start": 109,
+      "end": 115,
+      "arabic": "فَيَوۡمَئِذٍ لَّا يُعَذِّبُ عَذَابَهٗۤ اَحَدٌ",
+      "english": "So on that Day, none will punish [as severely] as His punishment,",
+      "urdu": "پس اس دن نہ اس کا سا عذاب کوئی دے سکتا"
+    },
+    {
+      "number": 26,
+      "start": 115,
+      "end": 122,
+      "arabic": "وَّلَا يُوۡثِقُ وَثَاقَهٗۤ اَحَدٌ",
+      "english": "And none will bind [as severely] as His binding [of the evildoers].",
+      "urdu": "اور نہ اس کا سا باندھنا کوئی باندھ سکتا۔"
+    },
+    {
+      "number": 27,
+      "start": 122,
+      "end": 131,
+      "arabic": "يٰۤاَيَّتُهَا النَّفۡسُ الۡمُطۡمَئِنَّةُ",
+      "english": "[To the righteous it will be said], \"O reassured soul,",
+      "urdu": "اے وہ جس کا دل اپنے رب پر جما رہا ،"
+    },
+    {
+      "number": 28,
+      "start": 131,
+      "end": 140,
+      "arabic": "ارۡجِعِىۡۤ اِلٰى رَبِّكِ رَاضِيَةً مَّرۡضِيَّةً‌",
+      "english": "Return to your Lord, well-pleased and pleasing [to Him],",
+      "urdu": "چل اپنے رب کی طرف، تو اس سے راضی، وہ تجھ سے راضی۔"
+    },
+    {
+      "number": 29,
+      "start": 140,
+      "end": 146,
+      "arabic": "فَادۡخُلِىۡ فِىۡ عِبٰدِىۙ",
+      "english": "And enter among My [righteous] servants",
+      "urdu": "مل جا میرے بندوں میں"
+    },
+    {
+      "number": 30,
+      "start": 146,
+      "end": 151.2,
+      "arabic": "وَادۡخُلِىۡ جَنَّتِى",
+      "english": "And enter My Paradise.\"",
+      "urdu": "اور داخل ہوجا میری بہشت میں"
     }
-  ]
+  ],
+  "surahUrdu": "الفجر"
 }

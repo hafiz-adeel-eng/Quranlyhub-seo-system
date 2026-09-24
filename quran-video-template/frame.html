@@ -5,6 +5,7 @@
 <style>
   @font-face { font-family: "Scheherazade"; src: url(fonts/ScheherazadeNew-Bold.ttf); }
   @font-face { font-family: "Cormorant"; src: url(fonts/CormorantGaramond-Italic.ttf); font-style: italic; }
+  @font-face { font-family: "CormorantBold"; src: url(fonts/CormorantGaramond-Bold.ttf); }
   @font-face { font-family: "Nastaliq"; src: url(fonts/NotoNastaliqUrdu.ttf); }
 
   :root { --gold: #d9b45a; --gold-soft: rgba(217, 180, 90, .35); --ink: #f7f3e8; }
@@ -36,12 +37,18 @@
     display: grid; place-items: center;
   }
   .logo .mark span { transform: rotate(-45deg); font: 30px "Scheherazade"; color: var(--gold); }
+  .brand {
+    position: absolute; top: 88px; right: 96px;
+    font: 64px/1 "CormorantBold", serif; letter-spacing: .5px; text-shadow: 0 4px 16px rgba(0, 0, 0, .5);
+  }
+  .brand .w { color: #ffffff; }
+  .brand .g { color: var(--gold); }
   .ref {
-    position: absolute; top: 76px; right: 90px;
-    font: italic 30px "Cormorant", serif; color: rgba(247, 243, 232, .75);
+    position: absolute; left: 0; right: 0; bottom: 66px; text-align: center; direction: rtl;
+    font: 30px/1.9 "Nastaliq", serif; color: rgba(247, 243, 232, .85);
   }
   .content {
-    position: absolute; left: 150px; right: 150px; top: 190px; bottom: 90px;
+    position: absolute; left: 150px; right: 150px; top: 200px; bottom: 150px;
     display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
   }
   .arabic {
@@ -53,7 +60,7 @@
     background: linear-gradient(90deg, transparent, var(--gold), transparent); }
   .english {
     font-family: "Cormorant", serif; font-style: italic; font-size: 46px; line-height: 1.35;
-    color: #efe6cf; max-width: 1450px;
+    color: #efe6cf; max-width: 1450px; text-wrap: balance;
   }
   .urdu {
     direction: rtl; margin-top: 54px; font-family: "Nastaliq", serif; font-size: 42px; line-height: 2.1;
@@ -83,12 +90,13 @@
         </defs>
         <rect width="1920" height="1080" fill="url(#star)"/>
       </svg>
-      <div class="frame"></div>
     </div>
   </div>
 
   <div class="text-layer">
+    <div class="frame"></div>
     <div class="logo" id="logo"><div class="mark"><span>ق</span></div>QuranlyHub</div>
+    <div class="brand"><span class="w">Quranly</span> <span class="g">Hub</span></div>
     <div class="ref" id="ref"></div>
     <div class="content">
       <div class="arabic" id="arabic"></div>
