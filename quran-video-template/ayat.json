@@ -1,0 +1,16 @@
+{
+  "audio": "audio/tilawat.mp3",
+  "surah": "Surah Al-Fajr",
+  "surahNumber": 89,
+  "logo": "logo.png",
+  "ayat": [
+    {
+      "number": 15,
+      "start": 0.0,
+      "end": 29.6,
+      "arabic": "فَاَمَّا الۡاِنۡسَانُ اِذَا مَا ابۡتَلٰٮهُ رَبُّهٗ فَاَكۡرَمَهٗ وَنَعَّمَهٗ ۙ فَيَقُوۡلُ رَبِّىۡۤ اَكۡرَمَنِؕ",
+      "english": "And as for man, when his Lord tries him and [thus] is generous to him and favors him, he says, \"My Lord has honored me.\"",
+      "urdu": "لیکن انسان کا حال یہ ہے کہ جب اس کا خداوند اس کا امتحان کرتا اور اس کو عزت و نعمت بخشتا ہے تو وہ خیال کرتا ہے کہ میرے رب نے میری شان بڑھائی ہے"
+    }
+  ]
+}
