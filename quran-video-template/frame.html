@@ -9,7 +9,7 @@
   @font-face { font-family: "Nastaliq"; src: url(fonts/NotoNastaliqUrdu.ttf); }
 
   :root { --gold: #d9b45a; --gold-soft: rgba(217, 180, 90, .35); --ink: #f7f3e8; }
-  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  html, body { margin: 0; width: 100vw; height: 100vh; overflow: hidden; }
   body { background: transparent; }
 
   /* Layer 1: background (rendered alone as bg.png) */
@@ -73,12 +73,24 @@
     background: radial-gradient(ellipse at 50% 50%, rgba(4, 24, 22, .55) 0%, rgba(3, 16, 15, .72) 60%, rgba(2, 10, 9, .9) 100%);
   }
   .over-video .bg svg { display: none; }
+
+  /* 9:16 Shorts: text stays inside the area YouTube's buttons and title don't cover */
+  .vertical .frame { inset: 28px; }
+  .vertical .logo { top: 60px; left: 56px; }
+  .vertical .logo img { height: 130px; }
+  .vertical .brand { top: 100px; right: 64px; font-size: 54px; }
+  .vertical .content { left: 90px; right: 90px; top: 260px; bottom: 470px; }
+  .vertical .arabic { font-size: 74px; line-height: 1.9; }
+  .vertical .divider { width: 300px; margin: 30px 0 34px; }
+  .vertical .english { font-size: 46px; line-height: 1.4; }
+  .vertical .urdu { font-size: 44px; line-height: 2.2; margin-top: 48px; }
+  .vertical .ref { bottom: 400px; font-size: 32px; }
 </style>
 </head>
 <body>
   <div class="bg-layer">
     <div class="bg">
-      <svg width="1920" height="1080">
+      <svg width="100%" height="100%">
         <defs>
           <pattern id="star" width="120" height="120" patternUnits="userSpaceOnUse">
             <g fill="none" stroke="#d9b45a" stroke-width="1.4" transform="translate(60 60)">
@@ -88,7 +100,7 @@
             </g>
           </pattern>
         </defs>
-        <rect width="1920" height="1080" fill="url(#star)"/>
+        <rect width="100%" height="100%" fill="url(#star)"/>
       </svg>
     </div>
   </div>

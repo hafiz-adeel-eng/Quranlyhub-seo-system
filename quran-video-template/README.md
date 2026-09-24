@@ -8,6 +8,8 @@ the frame is HTML, Chromium screenshots it and FFmpeg adds the recitation audio.
 2. Add each ayah to `ayat.json` with its `start`/`end` time in seconds inside the audio.
 3. `npm install`, then `node render.mjs` (all ayat, joined into `out/full.mp4`) or `node render.mjs 15` (one ayah).
 
+Add `--vertical` for a 1080x1920 Shorts version (written to `out/vertical/`).
+
 Requires `ffmpeg` on PATH.
 
 ## Nature / mosque backgrounds (Pexels)
