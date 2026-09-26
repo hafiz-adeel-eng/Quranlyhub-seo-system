@@ -39,6 +39,8 @@ load_env(HERE / ".env.txt")
 
 API_KEY = os.environ.get("GROQ_API_KEY", "")
 CHAT_MODEL = os.environ.get("CHAT_MODEL", "llama-3.3-70b-versatile")
+# Smaller model used when the free limit of CHAT_MODEL is reached.
+BACKUP_MODEL = os.environ.get("BACKUP_MODEL", "llama-3.1-8b-instant")
 STT_MODEL = os.environ.get("STT_MODEL", "whisper-large-v3-turbo")
 # Loudness needed to count as speech. Raise it if noise triggers the assistant.
 VOICE_LEVEL = float(os.environ.get("VOICE_LEVEL", "500"))
@@ -46,9 +48,10 @@ SILENCE_SEC = float(os.environ.get("SILENCE_SEC", "0.8"))
 MIN_SPEECH_SEC = float(os.environ.get("MIN_SPEECH_SEC", "0.5"))
 MAX_SPEECH_SEC = float(os.environ.get("MAX_SPEECH_SEC", "20"))
 LISTEN_TO_TEACHER = os.environ.get("LISTEN_TO_TEACHER", "yes").lower() != "no"
-HISTORY_LINES = 30
+HISTORY_LINES = 40
 
-SYSTEM_PROMPT = (HERE / "prompt.txt").read_text(encoding="utf-8")
+SYSTEM_PROMPT = ((HERE / "prompt.txt").read_text(encoding="utf-8") + "\n\n"
+                 + (HERE / "school-info.txt").read_text(encoding="utf-8"))
 
 # Text Whisper often "hears" in silence or noise.
 FAKE_TEXT = {"", "you", "thank you", "thank you.", "thanks for watching!", "bye.", "."}
@@ -135,18 +138,24 @@ def think(client):
         line = f"{speaker}: {text}"
         history = (history + [line])[-HISTORY_LINES:]
         ui_events.put(("log", line))
-        try:
-            reply = client.chat.completions.create(
-                model=CHAT_MODEL, temperature=0.2, max_tokens=120,
-                messages=[{"role": "system", "content": SYSTEM_PROMPT},
-                          {"role": "user", "content": "Live transcript so far:\n" + "\n".join(history)
-                           + f"\n\nThe last line is from the {speaker}. What should the teacher say now?"}],
-            ).choices[0].message.content.strip()
-        except Exception as e:
-            ui_events.put(("error", f"AI error: {e}"))
+        messages = [{"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "user", "content": "Live transcript so far:\n" + "\n".join(history)
+                     + f"\n\nThe last line is from the {speaker}. What should the teacher say now?"}]
+        reply = None
+        for model in (CHAT_MODEL, BACKUP_MODEL):
+            try:
+                reply = client.chat.completions.create(
+                    model=model, temperature=0.2, max_tokens=100, messages=messages,
+                ).choices[0].message.content.strip()
+                break
+            except Exception as e:
+                ui_events.put(("error", f"AI error ({model}): {e}"))
+        if reply is None:
             continue
         if "NO RESPONSE NEEDED" in reply.upper():
             ui_events.put(("log", "   (no response needed)"))
+        elif reply.upper().startswith("NEXT:"):
+            ui_events.put(("next", reply[5:].strip()))
         else:
             ui_events.put(("say", reply.replace("SAY:", "").strip()))
 
@@ -249,6 +258,9 @@ def start_listening(root, say, add_log):
             if kind == "say":
                 say.config(text="SAY: " + text, fg="#7CFC9A")
                 add_log(">> " + text, "#7CFC9A")
+            elif kind == "next":
+                say.config(text="NEXT: " + text, fg="#8ecbff")
+                add_log(">> " + text, "#8ecbff")
             elif kind == "error":
                 add_log(text, "#ff7070")
             else:

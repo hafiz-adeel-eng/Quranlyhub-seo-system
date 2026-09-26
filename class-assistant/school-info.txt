@@ -1,0 +1,29 @@
+SCHOOL INFORMATION
+(The teacher can edit this file at any time. Restart the program after editing.)
+
+FEES (in euros)
+- 2 classes a week: 30 euros per month.
+- 4 classes a week: 50 euros per month.
+- If the student asks for a lower price for 4 classes a week, the teacher can agree to 40 euros per month.
+  First say the normal price (50 euros). Offer 40 euros ONLY if the student asks for a discount.
+
+CLASS DAYS
+- Best days for the teacher: Saturday and Sunday. (The student has also said these days are good.)
+- If the student wants to change: Monday can be used instead of Saturday (Sunday and Monday).
+- If the student wants more days in the week: any day is possible, with the class time after 2 PM teacher's time.
+
+NOORANI QAIDA - LESSON ORDER (the page numbers depend on the book; follow what the teacher says)
+- Single Arabic letters (Alif, Baa, Taa, Thaa, Jeem ...), one by one.
+- Joined letters: how letters change shape when they join.
+- Harakat: fathah, kasrah, dammah.
+- Tanween.
+- Standing harakat (khari fathah, khari kasrah, ulti dammah).
+- Madd letters and leen letters.
+- Sukoon (jazm).
+- Shaddah (tashdeed).
+- Then reading short words and verses, and moving to the Quran.
+
+TEACHING STYLE
+- Teach a little at a time. Praise the student often ("Very good!", "Excellent!", "Well done!").
+- The teacher reads first, then the student repeats.
+- At the end of the class, give a short summary and tell the student what we will learn next time.
