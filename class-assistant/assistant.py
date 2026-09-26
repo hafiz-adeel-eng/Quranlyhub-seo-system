@@ -8,6 +8,7 @@ English answer, and shows it in a small always-on-top window.
 import io
 import os
 import queue
+import re
 import threading
 import time
 import wave
@@ -38,9 +39,21 @@ load_env(HERE / ".env")
 load_env(HERE / ".env.txt")
 
 API_KEY = os.environ.get("GROQ_API_KEY", "")
-CHAT_MODEL = os.environ.get("CHAT_MODEL", "llama-3.3-70b-versatile")
-# Smaller model used when the free limit of CHAT_MODEL is reached.
-BACKUP_MODEL = os.environ.get("BACKUP_MODEL", "llama-3.1-8b-instant")
+# Groq adds and retires models often, so we pick from what the account can
+# use right now, best first. CHAT_MODEL in .env forces a model to the front.
+PREFERRED_MODELS = [
+    "llama-3.3-70b-versatile",
+    "meta-llama/llama-4-maverick-17b-128e-instruct",
+    "moonshotai/kimi-k2-instruct",
+    "openai/gpt-oss-120b",
+    "meta-llama/llama-4-scout-17b-16e-instruct",
+    "qwen/qwen3-32b",
+    "openai/gpt-oss-20b",
+    "llama-3.1-8b-instant",
+]
+if os.environ.get("CHAT_MODEL"):
+    PREFERRED_MODELS.insert(0, os.environ["CHAT_MODEL"])
+NOT_CHAT = ("whisper", "guard", "tts", "playai", "distil", "compound", "orpheus", "prompt-guard")
 STT_MODEL = os.environ.get("STT_MODEL", "whisper-large-v3-turbo")
 # Loudness needed to count as speech. Raise it if noise triggers the assistant.
 VOICE_LEVEL = float(os.environ.get("VOICE_LEVEL", "500"))
@@ -52,6 +65,10 @@ HISTORY_LINES = 40
 
 SYSTEM_PROMPT = ((HERE / "prompt.txt").read_text(encoding="utf-8") + "\n\n"
                  + (HERE / "school-info.txt").read_text(encoding="utf-8"))
+
+# Words Whisper should expect, so "Noorani Qaida" is not heard as something else.
+STT_HINT = ("Quran class. Noorani Qaida, Quran, Alif, Baa, Taa, Thaa, Jeem, harakat, "
+            "fathah, kasrah, dammah, sukoon, tanween, madd, shaddah, Tajweed, euros.")
 
 # Text Whisper often "hears" in silence or noise.
 FAKE_TEXT = {"", "you", "thank you", "thank you.", "thanks for watching!", "bye.", "."}
@@ -120,15 +137,41 @@ def find_devices(pa):
     return mic, speakers
 
 
+def pick_models(client):
+    """Available chat models, best first."""
+    try:
+        available = [m.id for m in client.models.list().data]
+    except Exception as e:
+        ui_events.put(("error", f"Could not list Groq models: {e}"))
+        return list(PREFERRED_MODELS)
+    chat = [m for m in available if not any(word in m.lower() for word in NOT_CHAT)]
+    ordered = [m for m in PREFERRED_MODELS if m in chat]
+    return ordered + sorted(m for m in chat if m not in ordered)
+
+
+def ask(client, model, messages):
+    options = {}
+    if "gpt-oss" in model:
+        options["reasoning_effort"] = "low"
+    reply = client.chat.completions.create(
+        model=model, temperature=0.2, max_tokens=400, messages=messages, **options,
+    ).choices[0].message.content or ""
+    # Some models write their thinking in <think> tags first.
+    return re.sub(r"<think>.*?</think>", "", reply, flags=re.S).strip()
+
+
 def think(client):
     history = []
+    models = pick_models(client)
+    ui_events.put(("log", f"AI model: {models[0] if models else 'none found'}"))
     while not stop.is_set():
         speaker, wav = segments.get()
         # The teacher may speak Urdu or Hindi, so only fix the student's language.
         options = {"language": "en"} if speaker == "STUDENT" else {}
         try:
             result = client.audio.transcriptions.create(
-                file=("speech.wav", wav), model=STT_MODEL, temperature=0.0, **options)
+                file=("speech.wav", wav), model=STT_MODEL, temperature=0.0,
+                prompt=STT_HINT, **options)
             text = result.text.strip()
         except Exception as e:
             ui_events.put(("error", f"Speech-to-text error: {e}"))
@@ -142,15 +185,18 @@ def think(client):
                     {"role": "user", "content": "Live transcript so far:\n" + "\n".join(history)
                      + f"\n\nThe last line is from the {speaker}. What should the teacher say now?"}]
         reply = None
-        for model in (CHAT_MODEL, BACKUP_MODEL):
+        for model in list(models):
             try:
-                reply = client.chat.completions.create(
-                    model=model, temperature=0.2, max_tokens=100, messages=messages,
-                ).choices[0].message.content.strip()
+                reply = ask(client, model, messages)
                 break
             except Exception as e:
+                if "model_not_found" in str(e) or "decommissioned" in str(e):
+                    models.remove(model)  # retired: never try it again
+                    if models:
+                        ui_events.put(("log", f"AI model: {models[0]}"))
+                    continue
                 ui_events.put(("error", f"AI error ({model}): {e}"))
-        if reply is None:
+        if not reply:
             continue
         if "NO RESPONSE NEEDED" in reply.upper():
             ui_events.put(("log", "   (no response needed)"))
