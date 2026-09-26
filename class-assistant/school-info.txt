@@ -10,7 +10,8 @@ FEES (in euros)
 CLASS DAYS
 - Best days for the teacher: Saturday and Sunday. (The student has also said these days are good.)
 - If the student wants to change: Monday can be used instead of Saturday (Sunday and Monday).
-- If the student wants more days in the week: any day is possible, with the class time after 2 PM teacher's time.
+- If the student wants more days in the week: any day is possible, with the class time after 2 PM France time.
+- Always say times in France time (the student lives in France).
 
 NOORANI QAIDA - LESSON ORDER (the page numbers depend on the book; follow what the teacher says)
 - Single Arabic letters (Alif, Baa, Taa, Thaa, Jeem ...), one by one.
