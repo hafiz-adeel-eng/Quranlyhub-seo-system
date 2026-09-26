@@ -56,6 +56,7 @@ FAKE_TEXT = {"", "you", "thank you", "thank you.", "thanks for watching!", "bye.
 segments = queue.Queue()  # (speaker, wav_bytes)
 ui_events = queue.Queue()  # (kind, text)
 stop = threading.Event()
+levels = {"STUDENT": 0.0, "TEACHER": 0.0}  # latest loudness, shown as meters
 
 
 def to_wav(frames, channels, rate):
@@ -85,6 +86,7 @@ def record(pa, device, speaker):
             else:
                 data = stream.read(block, exception_on_overflow=False)
                 level = np.sqrt(np.mean(np.frombuffer(data, np.int16).astype(np.float32) ** 2))
+                levels[speaker] = level
                 now = time.monotonic()
                 if level > VOICE_LEVEL:
                     if not speaking:
@@ -133,14 +135,12 @@ def think(client):
         line = f"{speaker}: {text}"
         history = (history + [line])[-HISTORY_LINES:]
         ui_events.put(("log", line))
-        if speaker != "STUDENT":
-            continue
         try:
             reply = client.chat.completions.create(
                 model=CHAT_MODEL, temperature=0.2, max_tokens=120,
                 messages=[{"role": "system", "content": SYSTEM_PROMPT},
                           {"role": "user", "content": "Live transcript so far:\n" + "\n".join(history)
-                           + "\n\nWhat should the teacher say now?"}],
+                           + f"\n\nThe last line is from the {speaker}. What should the teacher say now?"}],
             ).choices[0].message.content.strip()
         except Exception as e:
             ui_events.put(("error", f"AI error: {e}"))
@@ -231,6 +231,13 @@ def start_listening(root, say, add_log):
     add_log(f"Student sound from: {speakers['name']}")
     add_log(f"Teacher mic: {mic['name']}" if LISTEN_TO_TEACHER else "Teacher mic: off")
 
+    meter = tk.Label(root, font=("Consolas", 10), fg="#888", bg="#111", anchor="w")
+    meter.pack(fill="x", padx=12, pady=(0, 8), after=say)
+
+    def bar(value):
+        filled = min(10, int(value / VOICE_LEVEL * 5))
+        return "#" * filled + "." * (10 - filled)
+
     threading.Thread(target=record, args=(pa, speakers, "STUDENT"), daemon=True).start()
     if LISTEN_TO_TEACHER:
         threading.Thread(target=record, args=(pa, mic, "TEACHER"), daemon=True).start()
@@ -246,6 +253,9 @@ def start_listening(root, say, add_log):
                 add_log(text, "#ff7070")
             else:
                 add_log(text)
+        meter.config(text=f"Student [{bar(levels['STUDENT'])}]   Teacher [{bar(levels['TEACHER'])}]")
+        levels["STUDENT"] *= 0.7
+        levels["TEACHER"] *= 0.7
         root.after(100, poll)
 
     root.after(300, lambda: hide_from_screen_share(root))
