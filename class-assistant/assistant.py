@@ -24,7 +24,8 @@ HERE = Path(__file__).resolve().parent
 def load_env(path):
     if not path.exists():
         return
-    for line in path.read_text(encoding="utf-8").splitlines():
+    # utf-8-sig: old Notepad adds a hidden mark at the start of the file.
+    for line in path.read_text(encoding="utf-8-sig").splitlines():
         line = line.strip()
         if not line or line.startswith("#") or "=" not in line:
             continue
@@ -32,7 +33,9 @@ def load_env(path):
         os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
 
 
+# Windows often hides ".txt", so ".env" may really be ".env.txt".
 load_env(HERE / ".env")
+load_env(HERE / ".env.txt")
 
 API_KEY = os.environ.get("GROQ_API_KEY", "")
 CHAT_MODEL = os.environ.get("CHAT_MODEL", "llama-3.3-70b-versatile")
@@ -177,17 +180,53 @@ def main():
         log.tag_config(color, foreground=color)
         log.see("end")
 
-    if not API_KEY:
-        say.config(text="GROQ_API_KEY is missing. Put it in the .env file.", fg="#ff7070")
-        root.mainloop()
-        return
+    def start():
+        start_listening(root, say, add_log)
 
+    if API_KEY:
+        start()
+    else:
+        ask_for_key(root, say, start)
+    root.protocol("WM_DELETE_WINDOW", lambda: (stop.set(), root.destroy()))
+    root.mainloop()
+    stop.set()
+
+
+def ask_for_key(root, say, on_done):
+    """Let the teacher paste the Groq key once; it is saved to .env."""
+    say.config(text="Paste your Groq API key below and press Save.", fg="#ffd166")
+    row = tk.Frame(root, bg="#111")
+    row.pack(fill="x", padx=12, pady=(0, 8), after=say)
+    entry = tk.Entry(row, font=("Segoe UI", 11), show="*")
+    entry.pack(side="left", fill="x", expand=True, ipady=4)
+
+    def paste():
+        entry.delete(0, "end")
+        entry.insert(0, root.clipboard_get().strip())
+
+    def save():
+        global API_KEY
+        key = entry.get().strip()
+        if not key.startswith("gsk_"):
+            say.config(text="This does not look like a Groq key. It starts with gsk_", fg="#ff7070")
+            return
+        (HERE / ".env").write_text(f"GROQ_API_KEY={key}\n", encoding="utf-8")
+        API_KEY = key
+        row.destroy()
+        say.config(text="Listening...", fg="#7CFC9A")
+        on_done()
+
+    tk.Button(row, text="Paste", command=paste).pack(side="left", padx=(8, 0))
+    tk.Button(row, text="Save", command=save).pack(side="left", padx=(8, 0))
+    entry.focus_set()
+
+
+def start_listening(root, say, add_log):
     pa = pyaudio.PyAudio()
     try:
         mic, speakers = find_devices(pa)
     except Exception as e:
         say.config(text=f"Audio device problem: {e}", fg="#ff7070")
-        root.mainloop()
         return
     add_log(f"Student sound from: {speakers['name']}")
     add_log(f"Teacher mic: {mic['name']}" if LISTEN_TO_TEACHER else "Teacher mic: off")
@@ -211,9 +250,6 @@ def main():
 
     root.after(300, lambda: hide_from_screen_share(root))
     poll()
-    root.protocol("WM_DELETE_WINDOW", lambda: (stop.set(), root.destroy()))
-    root.mainloop()
-    stop.set()
 
 
 if __name__ == "__main__":

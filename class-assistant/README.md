@@ -6,11 +6,7 @@
 
 1. **Python انسٹال کریں:** python.org سے Python ڈاؤن لوڈ کریں۔ انسٹال کرتے وقت نیچے **"Add python.exe to PATH"** پر ٹک ضرور لگائیں۔
 2. **یہ فولڈر ڈاؤن لوڈ کریں:** GitHub پر برانچ `claude/quran-teaching-assistant-kduqbo` کھولیں، پھر **Code → Download ZIP** دبائیں۔ ZIP کو extract کریں اور `class-assistant` فولڈر کھولیں۔
-3. **Groq key ڈالیں:** `.env.example` فائل کی کاپی بنائیں اور اس کا نام `.env` رکھیں۔ اسے Notepad میں کھولیں اور اپنی key اس طرح لکھیں:
-   ```
-   GROQ_API_KEY=gsk_آپ_کی_key
-   ```
-   پھر فائل save کر دیں۔
+3. **Groq key ڈالیں:** `start.bat` چلائیں۔ پہلی بار کھڑکی میں key مانگی جائے گی۔ Groq کی key کاپی کریں، کھڑکی میں **Paste** دبائیں، پھر **Save** دبائیں۔ key محفوظ ہو جائے گی اور اگلی بار دوبارہ نہیں مانگی جائے گی۔
 
 ## ہر کلاس میں
 
